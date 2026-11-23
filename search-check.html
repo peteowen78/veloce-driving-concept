@@ -66,12 +66,22 @@
   footer .by{display:inline}
   .btn{display:inline-block;background:var(--ink);color:#fff;text-decoration:none;font-weight:700;border-radius:var(--r);padding:13px 22px;margin-top:6px}
   .btn:hover{background:#2B3A32}
+  .bar a{text-decoration:none}
+  .bar a:hover{text-decoration:underline}
+  .ai{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:32px 32px 24px}
+  .airows{display:grid;gap:0;margin:0 0 18px}
+  .airow{display:grid;grid-template-columns:92px 1fr;gap:16px;padding:16px 0;border-top:1px solid var(--line)}
+  .airow .tag{justify-self:start;margin:2px 0 0}
+  .airow h3{font-size:18px;margin:0 0 4px}
+  .airow p{margin:0;font-size:16px;color:var(--soft);max-width:60ch}
+  .aisub{font-size:15px;color:var(--soft);max-width:62ch;margin:0 0 10px}
+  @media (max-width:700px){.ai{padding:24px 20px 16px}.airow{grid-template-columns:1fr;gap:6px}}
   @media (min-width:701px){.goods.two{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
 <body>
 
-<div class="bar"><div class="wrap"><span class="by"><svg class="pod" viewBox="0 0 487.5 208.5" role="img" aria-label="Pete Owen Design logo"><path fill="currentColor" d="M487.5,10.6h-41.2v15.5c-15.3-10.6-33.9-16.8-53.8-16.8-30.1,0-57,14.1-74.4,36-17.4-21.9-44.3-36-74.4-36s-57,14.1-74.4,36c-17.4-21.9-44.3-36-74.4-36C44.8,9.4,3.8,48,0,96.9h-.3v100.3h41.2v-14.5c15.3,10.6,33.9,16.8,53.8,16.8,30.1,0,57-14.1,74.4-36,17.4,21.9,44.3,36,74.4,36s57-14.1,74.4-36c17.4,21.9,44.3,36,74.4,36,52.4,0,95.1-42.6,95.1-95.1s0-1.3,0-1.9h0V10.6h0ZM94.6,158.2c-29.7,0-53.8-24.2-53.8-53.8s24.2-53.8,53.8-53.8,53.8,24.2,53.8,53.8-24.2,53.8-53.8,53.8ZM243.5,158.2c-29.7,0-53.8-24.2-53.8-53.8s24.2-53.8,53.8-53.8,53.8,24.2,53.8,53.8-24.2,53.8-53.8,53.8ZM392.4,158.2c-29.7,0-53.8-24.2-53.8-53.8s24.2-53.8,53.8-53.8,53.8,24.2,53.8,53.8-24.2,53.8-53.8,53.8Z"/></svg>Website check by Pete Owen Design</span><span>Checked 23 November 2026</span></div></div>
+<div class="bar"><div class="wrap"><a class="by" href="index.html"><svg class="pod" viewBox="0 0 487.5 208.5" role="img" aria-label="Pete Owen Design logo"><path fill="currentColor" d="M487.5,10.6h-41.2v15.5c-15.3-10.6-33.9-16.8-53.8-16.8-30.1,0-57,14.1-74.4,36-17.4-21.9-44.3-36-74.4-36s-57,14.1-74.4,36c-17.4-21.9-44.3-36-74.4-36C44.8,9.4,3.8,48,0,96.9h-.3v100.3h41.2v-14.5c15.3,10.6,33.9,16.8,53.8,16.8,30.1,0,57-14.1,74.4-36,17.4,21.9,44.3,36,74.4,36s57-14.1,74.4-36c17.4,21.9,44.3,36,74.4,36,52.4,0,95.1-42.6,95.1-95.1s0-1.3,0-1.9h0V10.6h0ZM94.6,158.2c-29.7,0-53.8-24.2-53.8-53.8s24.2-53.8,53.8-53.8,53.8,24.2,53.8,53.8-24.2,53.8-53.8,53.8ZM243.5,158.2c-29.7,0-53.8-24.2-53.8-53.8s24.2-53.8,53.8-53.8,53.8,24.2,53.8,53.8-24.2,53.8-53.8,53.8ZM392.4,158.2c-29.7,0-53.8-24.2-53.8-53.8s24.2-53.8,53.8-53.8,53.8,24.2,53.8,53.8-24.2,53.8-53.8,53.8Z"/></svg>Prepared for you by Pete Owen Design</a><span>Website check, 23 November 2026</span></div></div>
 
 <div class="wrap">
 
@@ -119,11 +129,25 @@
     </div>
 </section>
 
+
+<section class="ai">
+  <h2>Can AI assistants find you?</h2>
+  <p class="sub">More people now ask ChatGPT, Claude or Google's AI answers instead of searching. These tools read your website too. We checked four things they rely on. <strong>Your site passes 2 of 4.</strong></p>
+  <div class="airows">
+    <div class="airow ok"><span class="tag good">Working</span><div><h3>AI assistants are allowed in</h3><p>Nothing on your site turns them away.</p></div></div>
+    <div class="airow ok"><span class="tag good">Working</span><div><h3>The words can be read without running the page</h3><p>Your words are there in the page itself, so AI tools can read them.</p></div></div>
+    <div class="airow no"><span class="tag fix">To fix</span><div><h3>Your phone number and address are written out</h3><p>Neither is written on your home page. Your fact sheet for Google carries them, which helps, but an AI tool reading the page itself will not find them.</p></div></div>
+    <div class="airow no"><span class="tag fix">To fix</span><div><h3>A summary file for AI tools</h3><p>There is none. It is a newer idea, a short plain-text summary of what Veloce does and who for, and it takes about twenty minutes to write.</p></div></div>
+  </div>
+  <p class="aisub">Your site is otherwise well placed here: it has a great deal of readable text and a fact sheet already.</p>
+  <p class="aisub">Nobody can make an AI recommend a business, and anyone who offers to is selling nothing. What a website can do is let these tools reach it, read it and get your facts right.</p>
+</section>
+
 <section class="next">
   <h2>What we would do</h2>
   <p>On the search side your site is in good order. The two points above are small, and a new site would close both. The larger case for a redesign is how the brand looks and reads once someone arrives.</p>
   <p>That is what our concept design shows.</p>
-  <p><a class="btn" href="index.html">See the concept design</a></p>
+  <p><a class="btn" href="index.html#designs">See the design ideas</a></p>
 </section>
 
 </div>
