@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Veloce Driving · L Cinematic (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,300..600&family=Newsreader:ital,opsz,wght@0,6..72,300..500;1,6..72,300..500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0a0c0e;
+  --ink-2:#121619;
+  --paper:#e8ebed;
+  --mute:#a3abb2;
+  --dim:#6f787f;
+  --red:#cf3f2e;
+  --bar:clamp(34px,7.5vh,76px);
+  --wide:"Archivo",system-ui,sans-serif;
+  --serif:"Newsreader",Georgia,serif;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html{background:var(--ink);scroll-behavior:smooth}
+body{margin:0;background:var(--ink);color:var(--paper);font:400 1.125rem/1.6 var(--serif);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+img{display:block}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--red);outline-offset:4px}
+
+/* credit lettering: wide, light, tracked */
+.credit{font-family:var(--wide);font-stretch:125%;font-weight:400;text-transform:uppercase;letter-spacing:.32em;font-size:.72rem;line-height:1.5}
+.kerb{display:inline-block;width:28px;height:6px;background:repeating-linear-gradient(90deg,var(--red) 0 7px,var(--paper) 7px 14px);vertical-align:middle}
+
+/* frames and photographs */
+.frame{position:relative;overflow:hidden;background:var(--ink-2)}
+.frame img{position:absolute;left:0;top:-12%;width:100%;height:124%;object-fit:cover;will-change:transform;transform:translate3d(0,0,0) scale(1.04)}
+
+/* ---------- Title sequence ---------- */
+.title{position:relative;height:100vh;height:100svh;min-height:560px;display:grid;grid-template-rows:var(--bar) 1fr var(--bar);background:#000}
+.title .frame{grid-row:1 / -1;position:absolute;inset:0}
+.title .frame img{top:0;height:100%;object-position:50% 74%;animation:push 14s var(--ease) both}
+.title .frame::after{content:"";position:absolute;inset:0;background:
+  linear-gradient(180deg,rgba(0,0,0,.72) 0%,rgba(0,0,0,.15) 38%,rgba(0,0,0,0) 60%,rgba(0,0,0,.55) 100%),
+  linear-gradient(90deg,rgba(0,0,0,.55),rgba(0,0,0,0) 60%)}
+.bar{position:relative;z-index:2;background:#000;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:0 clamp(16px,3.4vw,48px)}
+.bar.top{animation:barIn 1.6s var(--ease) both}
+.bar.bottom{animation:barIn 1.6s var(--ease) both}
+.mark{display:flex;align-items:center;gap:.9rem;text-decoration:none;font-family:var(--wide);font-stretch:125%;font-weight:500;letter-spacing:.42em;font-size:.82rem}
+nav ul{list-style:none;display:flex;gap:clamp(1rem,2.4vw,2.4rem);margin:0;padding:0}
+nav a{text-decoration:none;color:var(--mute);transition:color .3s}
+nav a:hover{color:var(--paper)}
+nav .enq{color:var(--paper)}
+.title-card{position:relative;z-index:2;align-self:start;padding:clamp(28px,8vh,96px) clamp(16px,3.4vw,48px) 0}
+.title-card h1{margin:0;font-family:var(--wide);font-stretch:125%;font-weight:300;font-size:clamp(2.6rem,8.4vw,6rem);letter-spacing:.24em;line-height:1;margin-right:-.24em;animation:rise 2.4s .5s var(--ease) both}
+.title-card h1 span{display:block;font-size:max(.2em,.72rem);letter-spacing:.62em;font-weight:400;color:var(--mute);margin-top:1.2em}
+.title-card .tag{margin:clamp(2rem,6vh,3.6rem) 0 0;max-width:24ch;font-style:italic;font-weight:300;font-size:clamp(1.4rem,2.6vw,2.2rem);line-height:1.2;animation:rise 2.4s 1s var(--ease) both}
+.title-card .tag em{font-style:normal;color:var(--mute);display:block;font-size:.62em;margin-top:.7em;line-height:1.45}
+.bar.bottom .credit{color:var(--mute)}
+.bar.bottom .roles{display:flex;gap:clamp(1rem,3vw,3rem)}
+.bar.bottom a{text-decoration:none}
+.bar.bottom a:hover{color:var(--paper)}
+
+/* ---------- Scenes: every photograph is a background layer ---------- */
+.scene{position:relative;overflow:hidden;min-height:118vh;min-height:118svh;display:flex;isolation:isolate}
+.scene .bg{position:absolute;left:0;right:0;top:-22%;height:144%;z-index:-2;will-change:transform}
+.scene .bg img{width:100%;height:100%;object-fit:cover}
+.scene .shade{position:absolute;inset:0;z-index:-1;pointer-events:none}
+.scene .ghost{position:absolute;z-index:-1;pointer-events:none;font-family:var(--wide);font-stretch:125%;font-weight:300;line-height:.8;color:transparent;-webkit-text-stroke:1.5px rgba(232,235,237,.34);white-space:nowrap;will-change:transform}
+.scene .inner{position:relative;width:100%;padding:clamp(110px,18vh,200px) clamp(16px,6vw,96px);display:flex;flex-direction:column;justify-content:center;will-change:transform}
+.lift{will-change:transform}
+
+/* prologue: the wet kerb, almost black */
+.prologue{min-height:100vh;min-height:100svh;text-align:center}
+.prologue .bg img{object-position:50% 60%;filter:saturate(.7)}
+.prologue .shade{background:radial-gradient(ellipse at 50% 50%,rgba(10,12,14,.55),rgba(10,12,14,.92) 70%)}
+.prologue p{margin:0 auto;max-width:21ch;font-weight:300;font-size:clamp(1.7rem,4vw,3.3rem);line-height:1.18;text-wrap:balance}
+.prologue p + p{color:var(--mute)}
+.prologue .credit{margin-top:3rem;color:var(--dim)}
+
+/* chapters */
+.chapter .inner{justify-content:flex-end;padding-bottom:clamp(80px,14vh,160px)}
+.chapter .ghost{right:-2vw;top:8%;font-size:clamp(14rem,36vw,34rem)}
+.chapter h2{margin:0;font-family:var(--wide);font-stretch:125%;font-weight:300;font-size:clamp(1.7rem,3.4vw,3rem);letter-spacing:.08em;line-height:1.1;text-transform:uppercase}
+.chapter h2 .num{display:block;color:var(--red);font-weight:400;font-size:.42em;letter-spacing:.4em;margin-bottom:1.2em}
+.chapter .line{margin:1.4rem 0 1.6rem;font-style:italic;font-weight:300;font-size:clamp(1.6rem,3vw,2.6rem);line-height:1.15;max-width:20ch}
+.chapter .body{margin:0 0 1.8rem;max-width:42ch;color:#c9cfd4}
+.chapter .cols{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(24px,5vw,96px);align-items:end}
+.roll{list-style:none;margin:0;padding:0;display:grid;gap:.85rem}
+.roll li{color:var(--paper)}
+.roll li::before{content:"";display:inline-block;width:14px;height:1px;background:var(--red);vertical-align:middle;margin-right:1rem}
+.chapter blockquote{margin:0;font-style:italic;font-size:clamp(1.15rem,1.7vw,1.45rem);line-height:1.38;max-width:30ch}
+.chapter blockquote cite{display:block;margin-top:.9rem;font-style:normal;font-family:var(--wide);font-stretch:125%;text-transform:uppercase;letter-spacing:.28em;font-size:.62rem;color:var(--mute)}
+.chapter .shade{background:linear-gradient(180deg,rgba(10,12,14,.75) 0%,rgba(10,12,14,.15) 26%,rgba(10,12,14,.5) 44%,rgba(10,12,14,.86) 62%,rgba(10,12,14,.95) 100%),linear-gradient(90deg,rgba(10,12,14,.55),rgba(10,12,14,0) 70%)}
+#driver .bg img{object-position:50% 78%}
+#management .bg img{object-position:50% 58%}
+#management .ghost{right:auto;left:-3vw}
+#management .cols{grid-template-columns:minmax(0,6fr) minmax(0,5fr)}
+#office .bg img{object-position:48% 52%}
+
+/* Millbrook: the wet kerb close up, red glowing through */
+.intermission .bg img{object-position:50% 50%}
+.intermission .shade{background:linear-gradient(90deg,rgba(10,12,14,.9) 0%,rgba(10,12,14,.72) 50%,rgba(10,12,14,.6) 100%),linear-gradient(180deg,rgba(10,12,14,.2),rgba(10,12,14,.75))}
+.intermission .inner{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(32px,6vw,120px);align-items:end;justify-content:initial}
+.intermission h2{margin:0;font-weight:300;font-size:clamp(2.2rem,5.2vw,4.6rem);line-height:1.05;letter-spacing:-.015em;text-wrap:balance}
+.intermission h2 em{color:var(--mute)}
+.intermission .credit{color:var(--mute);margin:0 0 1.6rem}
+.ticket{display:grid;gap:1.4rem}
+.price{display:flex;align-items:baseline;gap:1.2rem;flex-wrap:wrap;font-family:var(--wide);font-stretch:125%;font-weight:300}
+.price strong{font-weight:300;font-size:clamp(2.4rem,4.6vw,3.8rem);letter-spacing:.04em}
+.price span{color:#c9cfd4;font-size:.95rem;letter-spacing:.06em}
+.btn{justify-self:start;align-self:flex-start;display:inline-flex;align-items:center;gap:1rem;padding:1.05rem 1.6rem;border:1px solid var(--paper);text-decoration:none;font-family:var(--wide);font-stretch:125%;text-transform:uppercase;letter-spacing:.28em;font-size:.72rem;transition:background .4s var(--ease),color .4s var(--ease),border-color .4s}
+.btn:hover{background:var(--paper);color:var(--ink)}
+.btn.red{border-color:var(--red);background:var(--red);color:#fff}
+.btn.red:hover{background:#fff;border-color:#fff;color:var(--ink)}
+.btn svg{width:18px;height:10px}
+
+/* cast: the pit straight, pushed far back into the dark */
+.cast{text-align:center}
+.cast .bg img{object-position:50% 40%;filter:blur(2px) saturate(.6)}
+.cast .shade{background:rgba(10,12,14,.84)}
+.cast .lead{margin:0 auto clamp(56px,10vh,110px);max-width:22ch;font-weight:300;font-style:italic;font-size:clamp(1.5rem,3vw,2.5rem);line-height:1.2}
+.cast ul{list-style:none;margin:0 auto;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:clamp(48px,8vw,140px);max-width:1040px;width:100%}
+.cast h3{margin:0 0 1.4rem;font-family:var(--wide);font-stretch:125%;font-weight:300;font-size:clamp(1.5rem,2.8vw,2.4rem);letter-spacing:.2em;margin-right:-.2em;text-transform:uppercase;line-height:1.15}
+.cast .role{color:var(--red);margin:0 0 1.2rem}
+.cast p.bio{margin:0 auto;max-width:30ch;color:#b9c0c6}
+
+/* where next */
+.next{min-height:100vh;min-height:100svh}
+.next .bg img{object-position:50% 52%;transform:scale(1.06);transform-origin:60% 50%}
+.next .shade{background:linear-gradient(90deg,rgba(0,0,0,.82) 0%,rgba(0,0,0,.5) 42%,rgba(0,0,0,0) 72%),linear-gradient(180deg,rgba(0,0,0,.6) 0%,rgba(0,0,0,.1) 40%,rgba(0,0,0,.2) 62%,rgba(0,0,0,.85) 100%)}
+.next .inner{display:grid;gap:clamp(20px,4vh,40px);justify-items:start;align-content:center;justify-content:start}
+.next h2{margin:0;font-weight:300;font-style:italic;font-size:clamp(3.4rem,10vw,7rem);line-height:.95;letter-spacing:-.02em}
+.next p{margin:0;max-width:32ch;font-size:clamp(1.1rem,1.6vw,1.35rem);line-height:1.45}
+.next .mail{font-family:var(--wide);font-stretch:110%;font-size:clamp(.9rem,1.4vw,1.1rem);letter-spacing:.06em;color:var(--paper);text-decoration:none;border-bottom:1px solid var(--red);padding-bottom:.3rem;overflow-wrap:anywhere}
+.next .mail:hover{color:#fff;border-bottom-color:#fff}
+.next .ending{position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:space-between;gap:1rem;padding:18px clamp(16px,6vw,96px);background:#000;color:var(--mute)}
+
+/* ---------- Footer: end credits ---------- */
+footer{padding:clamp(72px,12vh,140px) clamp(16px,6vw,96px) 56px;text-align:center;color:var(--dim)}
+footer .mark{justify-content:center;color:var(--paper);margin-bottom:2.4rem}
+footer p{margin:.4rem auto;max-width:60ch;font-size:.95rem;line-height:1.55}
+footer p.credit{font-size:.62rem;margin-top:2.4rem;color:var(--dim)}
+
+/* reveal: only when scripts run and motion is welcome */
+.js .rv{opacity:0;transform:translateY(14px);filter:blur(4px);transition:opacity 1.6s var(--ease),transform 1.6s var(--ease),filter 1.6s var(--ease)}
+.js .rv.in{opacity:1;transform:none;filter:none}
+
+@keyframes push{from{transform:scale(1.14)}to{transform:scale(1)}}
+@keyframes rise{from{opacity:0;transform:translateY(16px);filter:blur(6px)}to{opacity:1;transform:none;filter:none}}
+@keyframes barIn{from{transform:scaleY(2.2)}to{transform:none}}
+.bar.top{transform-origin:top}.bar.bottom{transform-origin:bottom}
+
+@media (max-width:860px){
+  nav li:not(.keep){display:none}
+  .chapter .cols,#management .cols,.intermission .inner,.cast ul{grid-template-columns:1fr}
+  .bar.bottom .roles .credit:not(:first-child){display:none}
+  .scene{min-height:0}
+  .scene .inner{padding:120px 18px 96px}
+  .chapter .inner{padding-top:46vh}
+  .chapter .ghost{font-size:13rem;top:4%}
+  .chapter .shade{background:linear-gradient(180deg,rgba(10,12,14,.55) 0%,rgba(10,12,14,.2) 22%,rgba(10,12,14,.82) 50%,rgba(10,12,14,.95) 100%)}
+  .intermission .inner{gap:40px}
+  .intermission .shade{background:rgba(10,12,14,.78)}
+  .cast ul{gap:64px}
+  .next .inner{padding-bottom:120px}
+}
+@media (max-width:480px){
+  .credit{letter-spacing:.24em;font-size:.64rem}
+  .mark{letter-spacing:.32em}
+  .title-card h1 span{letter-spacing:.4em}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .js .rv{opacity:1;transform:none;filter:none}
+  .frame img,.scene .bg,.scene .ghost,.lift,.scene .inner{transform:none!important}
+}
+</style>
+<script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+<div style="background:#17201B;color:#fff;font:500 14px/1.4 system-ui,sans-serif;padding:9px 20px;position:relative;display:flex;flex-wrap:wrap;gap:6px 18px;align-items:center;z-index:2147483000"><span style="display:inline-flex;align-items:center;gap:8px"><svg style="height:12px;width:auto;color:#fff" viewBox="0 0 487.5 208.5" role="img" aria-label="Pete Owen Design logo"><path fill="currentColor" d="M487.5,10.6h-41.2v15.5c-15.3-10.6-33.9-16.8-53.8-16.8-30.1,0-57,14.1-74.4,36-17.4-21.9-44.3-36-74.4-36s-57,14.1-74.4,36c-17.4-21.9-44.3-36-74.4-36C44.8,9.4,3.8,48,0,96.9h-.3v100.3h41.2v-14.5c15.3,10.6,33.9,16.8,53.8,16.8,30.1,0,57-14.1,74.4-36,17.4,21.9,44.3,36,74.4,36s57-14.1,74.4-36c17.4,21.9,44.3,36,74.4,36,52.4,0,95.1-42.6,95.1-95.1s0-1.3,0-1.9h0V10.6h0ZM94.6,158.2c-29.7,0-53.8-24.2-53.8-53.8s24.2-53.8,53.8-53.8,53.8,24.2,53.8,53.8-24.2,53.8-53.8,53.8ZM243.5,158.2c-29.7,0-53.8-24.2-53.8-53.8s24.2-53.8,53.8-53.8,53.8,24.2,53.8,53.8-24.2,53.8-53.8,53.8ZM392.4,158.2c-29.7,0-53.8-24.2-53.8-53.8s24.2-53.8,53.8-53.8,53.8,24.2,53.8,53.8-24.2,53.8-53.8,53.8Z"/></svg> Design idea by Pete Owen Design. Not the live Veloce Driving website.</span><a href="../index.html" style="color:#fff;font-weight:700">Back to the start</a></div>
+
+<!-- TITLE SEQUENCE -->
+<header class="title" id="top">
+  <div class="frame" id="title-bg"><img src="files/track-4.jpg" alt="" fetchpriority="high"></div>
+  <div class="bar top">
+    <a class="mark" href="#top" aria-label="Veloce Driving, back to the top"><span class="kerb" aria-hidden="true"></span>VELOCE</a>
+    <nav aria-label="Main">
+      <ul class="credit">
+        <li><a href="#driver">Driving</a></li>
+        <li><a href="#management">Motorsport</a></li>
+        <li><a href="#office">Private Office</a></li>
+        <li class="keep"><a class="enq" href="#where">Enquire</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="title-card" id="title-card">
+    <h1>VELOCE<span>Driving</span></h1>
+    <p class="tag">Independent by design.<em>Coaching, racing careers and private cars, guided by two racing drivers.</em></p>
+  </div>
+  <div class="bar bottom">
+    <div class="roles">
+      <a class="credit" href="#driver">Driver Development</a>
+      <a class="credit" href="#management">Motorsport Management</a>
+      <a class="credit" href="#office">Private Office</a>
+    </div>
+    <span class="credit" aria-hidden="true">Scroll</span>
+  </div>
+</header>
+
+<main>
+
+<!-- PROLOGUE -->
+<section class="scene prologue" aria-label="The Veloce Method" data-scene>
+  <div class="bg" data-speed=".38" aria-hidden="true"><img src="files/track-6.jpg" alt="" loading="lazy"></div>
+  <div class="shade"></div>
+  <div class="inner" data-lift="-.08">
+    <p class="rv">Understand what the car is doing.</p>
+    <p class="rv">Understand what you are doing to it.</p>
+    <div class="credit rv">The Veloce Method</div>
+  </div>
+</section>
+
+<!-- CHAPTER I -->
+<section class="scene chapter" id="driver" aria-labelledby="h-driver" data-scene>
+  <div class="bg" data-speed=".42" aria-hidden="true"><img src="files/track-2.jpg" alt="" loading="lazy"></div>
+  <div class="shade"></div>
+  <div class="ghost" data-speed="-.22" aria-hidden="true">I</div>
+  <div class="inner" data-lift="-.06">
+    <div class="cols">
+      <div class="rv">
+        <h2 id="h-driver"><span class="num">Chapter I</span>Driver Development</h2>
+        <p class="line">Know why the car moves before you ask it to.</p>
+        <blockquote>“Now I look forward to driving with excitement instead of anxiety.”<cite>Emma R, international client</cite></blockquote>
+      </div>
+      <div class="rv">
+        <p class="body">Coaching on road, on track and at UTAC Millbrook, built on understanding why the car behaves as it does, not only what to do.</p>
+        <ul class="roll">
+          <li>Car control and vehicle dynamics</li>
+          <li>Advanced road driver development</li>
+          <li>Track day coaching</li>
+          <li>Bespoke multi-stage programmes</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CHAPTER II -->
+<section class="scene chapter" id="management" aria-labelledby="h-management" data-scene>
+  <div class="bg" data-speed=".42" aria-hidden="true"><img src="files/track-3.jpg" alt="" loading="lazy"></div>
+  <div class="shade"></div>
+  <div class="ghost" data-speed="-.22" aria-hidden="true">II</div>
+  <div class="inner" data-lift="-.06">
+    <div class="cols">
+      <div class="rv">
+        <h2 id="h-management"><span class="num">Chapter II</span>Motorsport Management</h2>
+        <p class="line">One programme. One direction.</p>
+        <blockquote>“Working with them is one of the best decisions we’ve made.”<cite>Becky and Simon C, racing parents</cite></blockquote>
+      </div>
+      <ul class="roll rv">
+        <li>Career and pathway strategy</li>
+        <li>Team and championship selection</li>
+        <li>Contracts, budgets and testing</li>
+        <li>Race operations</li>
+        <li>Sponsorship and partnership development</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- CHAPTER III -->
+<section class="scene chapter" id="office" aria-labelledby="h-office" data-scene>
+  <div class="bg" data-speed=".42" aria-hidden="true"><img src="files/road-office.jpg" alt="" loading="lazy"></div>
+  <div class="shade"></div>
+  <div class="ghost" data-speed="-.22" aria-hidden="true">III</div>
+  <div class="inner" data-lift="-.06">
+    <div class="cols">
+      <div class="rv">
+        <h2 id="h-office"><span class="num">Chapter III</span>Private Office</h2>
+        <p class="line">Personal. Discreet. Independent.</p>
+        <blockquote>“Kat and the Veloce Driving team helped me source the perfect car that met all my requirements.”<cite>David K, international client</cite></blockquote>
+      </div>
+      <div class="rv">
+        <p class="body">One experienced point of contact for the cars in your life, with no dealer or broker commission behind the advice.</p>
+        <ul class="roll">
+          <li>Vehicle sourcing and acquisition</li>
+          <li>Servicing, storage and transport</li>
+          <li>Sales advisory and specialist projects</li>
+          <li>Private driver development</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INTERMISSION: MILLBROOK -->
+<section class="scene intermission" id="millbrook" aria-labelledby="h-millbrook" data-scene>
+  <div class="bg" data-speed=".35" aria-hidden="true"><img src="files/track-6.jpg" alt="" loading="lazy" style="object-position:50% 70%"></div>
+  <div class="shade"></div>
+  <div class="inner" data-lift="-.05">
+    <div class="rv">
+      <p class="credit">UTAC Millbrook, Bedfordshire</p>
+      <h2 id="h-millbrook">One day.<br><em>One car. One coach.</em></h2>
+    </div>
+    <div class="ticket rv">
+      <p style="margin:0;color:#c9cfd4;max-width:40ch">The Millbrook Course is one-to-one coaching at the proving ground, and the one thing you can book straight away.</p>
+      <div class="price"><strong>£1,500</strong><span>or a £375 deposit to hold your date</span></div>
+      <a class="btn" href="mailto:enquiries@velocedriving.com?subject=UTAC%20Millbrook%20Course">Ask about a date
+        <svg viewBox="0 0 18 10" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M0 5h17M13 1l4 4-4 4"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- CAST -->
+<section class="scene cast" id="founders" aria-labelledby="h-cast" data-scene>
+  <div class="bg" data-speed=".3" aria-hidden="true"><img src="files/track-3.jpg" alt="" loading="lazy"></div>
+  <div class="shade"></div>
+  <div class="inner" data-lift="-.05">
+    <h2 id="h-cast" class="lead rv">Two racing drivers, in the car with you.</h2>
+    <ul>
+      <li class="rv">
+        <h3>Kat Impey</h3>
+        <p class="credit role">Co-founder</p>
+        <p class="bio">Coaching since 2004. Raced from professional karting to Formula Three.</p>
+      </li>
+      <li class="rv">
+        <h3>Richard Bott</h3>
+        <p class="credit role">Co-founder</p>
+        <p class="bio">Racing since 1992. Has worked in driver management, supporting drivers in BTCC, Formula 3 and IndyCar.</p>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- WHERE NEXT -->
+<section class="scene next" id="where" aria-labelledby="h-where" data-scene>
+  <div class="bg" data-speed=".45" aria-hidden="true"><img src="files/track-5.jpg" alt="" loading="lazy"></div>
+  <div class="shade"></div>
+  <div class="inner" data-lift="-.07">
+    <h2 id="h-where" class="rv">Where next?</h2>
+    <p class="rv">A first lesson, a first season, or the next car. Tell us where you want to go and we will help you decide the route.</p>
+    <a class="btn red rv" href="mailto:enquiries@velocedriving.com">Start the conversation
+      <svg viewBox="0 0 18 10" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M0 5h17M13 1l4 4-4 4"/></svg></a>
+    <a class="mail rv" href="mailto:enquiries@velocedriving.com">enquiries@velocedriving.com</a>
+  </div>
+  <div class="ending"><span class="credit">UK, Europe and the USA</span><span class="credit">Discreet, personal, responsive</span></div>
+</section>
+
+</main>
+
+<footer id="credits">
+  <a class="mark" href="#top"><span class="kerb" aria-hidden="true"></span>VELOCE</a>
+  <p>Concept design by Pete Owen Design. Not the live Veloce Driving website.</p>
+  <p>Track photographs are reference stand-ins, to be replaced.</p>
+  <p>Services, prices, founders’ histories, reviews and the email address are from velocedriving.com. Headlines and short lines are proposed copy.</p>
+  <p class="credit">Direction L · Cinematic</p>
+</footer>
+
+<script>
+(function(){
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var rv = [].slice.call(document.querySelectorAll('.rv'));
+  if (reduce || !('IntersectionObserver' in window)) {
+    rv.forEach(function(el){ el.classList.add('in'); });
+    return;
+  }
+  var revealer = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if (e.isIntersecting){ e.target.classList.add('in'); revealer.unobserve(e.target); } });
+  }, { rootMargin: '0px 0px -8% 0px' });
+  rv.forEach(function(el){ revealer.observe(el); });
+
+  /* Layered parallax. Each scene has a background that moves slower than the page,
+     a ghost numeral that moves faster, and its words that drift slightly.
+     One rAF pass per scroll frame, transform only, scenes on screen only. */
+  var scenes = [].slice.call(document.querySelectorAll('[data-scene]'));
+  var live = new Set();
+  var watcher = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if (e.isIntersecting) live.add(e.target); else live.delete(e.target); });
+    queue();
+  }, { rootMargin: '20% 0px' });
+  scenes.forEach(function(s){ watcher.observe(s); });
+  var tBg = document.querySelector('#title-bg img'), tCard = document.getElementById('title-card');
+  var pending = false;
+  function queue(){ if (!pending){ pending = true; requestAnimationFrame(draw); } }
+  function draw(){
+    pending = false;
+    var vh = window.innerHeight, narrow = window.innerWidth < 861, k = narrow ? .6 : 1;
+    live.forEach(function(sc){
+      var r = sc.getBoundingClientRect();
+      /* d: distance of the scene's centre from the screen's centre, in pixels */
+      var d = (r.top + r.height / 2) - vh / 2;
+      sc.querySelectorAll('[data-speed]').forEach(function(el){
+        var sp = parseFloat(el.getAttribute('data-speed')) * k;
+        el.style.transform = 'translate3d(0,' + (-d * sp).toFixed(1) + 'px,0)';
+      });
+      var lift = sc.querySelector('[data-lift]');
+      if (lift) lift.style.transform = 'translate3d(0,' + (d * parseFloat(lift.getAttribute('data-lift')) * k).toFixed(1) + 'px,0)';
+    });
+    var y = window.scrollY;
+    if (y < vh * 1.2) {
+      if (tBg) tBg.style.transform = 'translate3d(0,' + (y * .45).toFixed(1) + 'px,0) scale(' + (1 + y / vh * .08).toFixed(4) + ')';
+      if (tCard) { tCard.style.transform = 'translate3d(0,' + (-y * .25).toFixed(1) + 'px,0)'; tCard.style.opacity = Math.max(0, 1 - y / (vh * .7)).toFixed(3); }
+    }
+  }
+  window.addEventListener('scroll', queue, { passive: true });
+  window.addEventListener('resize', queue);
+  queue();
+})();
+</script>
+</body>
+</html>
