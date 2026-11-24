@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta name="robots" content="noindex, nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Veloce — Direction F, Status (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Hanken+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#17191C;--paper:#F3F2EE;--green:#5F9B66;--graphite:#2B2E34;--red:#E8283A;--field:#5F9B66;--on:#FFFFFF;--word:#FFFFFF;--body:#3F7A48;--body2:#2F6238;--glass:#132017;--stripe:transparent}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 1.0625rem/1.5 "Hanken Grotesk",system-ui,sans-serif;overflow-x:hidden}
+h1,h2,h3,.anton{font-family:Anton,sans-serif;font-weight:400;line-height:.9;letter-spacing:0;text-transform:uppercase;margin:0;text-wrap:balance}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--red);outline-offset:3px}
+.wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+
+/* first screen: one car, one status, one colour */
+.stage{position:relative;background:var(--field);color:var(--on);min-height:min(900px,100vh);overflow:hidden;transition:background .6s cubic-bezier(.16,1,.3,1),color .4s;display:flex;flex-direction:column}
+.stage[data-s="1"]{--field:#2B2E34;--on:#fff;--word:#E8283A;--body:#C9CCD1;--body2:#9EA2A9;--glass:#14161A;--stripe:#E8283A}
+.stage[data-s="2"]{--field:#F3F2EE;--on:#17191C;--word:#17191C;--body:#FFFFFF;--body2:#DAD9D4;--glass:#2A2D31;--stripe:transparent}
+.head{display:flex;align-items:flex-start;gap:20px;padding:22px 0;position:relative;z-index:3}
+.brand{text-decoration:none;font:400 2rem/.9 Anton,sans-serif;text-transform:uppercase;letter-spacing:.02em}
+.head nav{margin-left:auto;display:flex;gap:24px;font-weight:500;padding-top:6px}
+.head nav a{text-decoration:none;border-bottom:2px solid transparent}.head nav a:hover{border-color:currentColor}
+.pill{display:inline-block;text-decoration:none;font-weight:700;padding:12px 22px;border-radius:999px;background:var(--on);color:var(--field);transition:background .6s,color .4s,transform .25s}
+.pill:hover{transform:translateY(-2px)}
+.clock{position:relative;z-index:3;margin-top:clamp(8px,2vh,24px)}
+.clock .live{display:flex;align-items:center;gap:10px;font-weight:500;margin-bottom:6px}
+.clock .live::before{content:"";width:10px;height:10px;border-radius:50%;background:currentColor}
+.clock .nums{display:flex;gap:clamp(16px,3vw,34px)}
+.clock b{display:block;font-weight:300;font-size:clamp(2.4rem,5vw,4rem);line-height:1;letter-spacing:-.03em}
+.clock small{display:block;font-size:.95rem;font-weight:500;margin-top:4px}
+.car{position:absolute;left:50%;top:50%;width:min(27vw,300px);transform:translate(-50%,-47%);z-index:1;filter:drop-shadow(0 26px 34px rgba(0,0,0,.4))}
+.car svg{display:block;width:100%;height:auto;transition:transform .7s cubic-bezier(.16,1,.3,1)}
+.car .b{fill:var(--body);stroke:rgba(0,0,0,.28);stroke-width:2;transition:fill .6s}
+.car .seam{fill:none;stroke:rgba(0,0,0,.28);stroke-width:1.6}.car .b2{fill:var(--body2);transition:fill .6s}.car .g{fill:var(--glass);transition:fill .6s}.car .st{fill:var(--stripe);transition:fill .6s}
+.status{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);z-index:2;text-align:center;pointer-events:none}
+.status small{display:block;font-weight:300;font-size:clamp(1.3rem,2.6vw,2.2rem);text-transform:uppercase;letter-spacing:.01em;margin-bottom:.1em}
+.status h1{font-size:clamp(3.6rem,17vw,14rem);color:var(--word);transition:color .5s}
+.stage[data-s="2"] .status h1{font-size:clamp(3.4rem,12.4vw,10.2rem)}
+.status.swap>*{animation:rise .6s cubic-bezier(.16,1,.3,1)}
+@keyframes rise{from{opacity:0;transform:translateY(.25em)}}
+.nub{position:absolute;top:50%;z-index:3;width:74px;height:150px;margin-top:-75px;border:0;cursor:pointer;background:var(--paper);color:var(--ink);font:500 1.6rem/1 "Hanken Grotesk",sans-serif;display:grid;place-items:center;transition:transform .25s cubic-bezier(.16,1,.3,1)}
+.nub.l{left:0;border-radius:0 80px 80px 0;padding-right:14px;transform-origin:0 50%}.nub.r{right:0;border-radius:80px 0 0 80px;padding-left:14px;transform-origin:100% 50%}
+.nub:hover{transform:scaleX(1.18)}
+.stage[data-s="2"] .nub{background:var(--ink);color:#fff}
+.foot{margin-top:auto;position:relative;z-index:3;display:flex;justify-content:space-between;align-items:flex-end;gap:20px;padding:0 0 28px}
+.foot p{margin:0;max-width:34ch;font-weight:500}
+.foot a{font-weight:700;text-decoration:none;white-space:nowrap;border-bottom:2px solid currentColor;padding-bottom:3px}
+
+.flag{height:64px;background:conic-gradient(var(--ink) 25%,var(--paper) 0 50%,var(--ink) 0 75%,var(--paper) 0) 0 0/64px 64px}
+
+.sec{padding:clamp(56px,8vw,110px) 0}
+.sec h2{font-size:clamp(3.2rem,8vw,6rem);margin-bottom:clamp(26px,4vw,48px)}
+.sec h2 small{display:block;font:300 .32em/1.1 "Hanken Grotesk",sans-serif;text-transform:uppercase;margin-bottom:.3em}
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{position:relative;border-radius:34px;padding:26px 26px 30px;min-height:330px;display:flex;flex-direction:column;text-decoration:none;color:#fff;background:var(--green);transition:transform .3s cubic-bezier(.16,1,.3,1)}
+.card:nth-child(2){background:var(--graphite)}.card:nth-child(3){background:#fff;color:var(--ink)}
+.card:hover{transform:translateY(-6px)}
+.card small{font-weight:300;text-transform:uppercase;font-size:1.05rem}
+.card h3{font-size:clamp(2.6rem,4.6vw,3.8rem);margin:4px 0 16px}
+.card:nth-child(2) h3{color:var(--red)}
+.card p{margin:auto 0 0;max-width:34ch}
+.card .go{margin-top:18px;font-weight:700}
+
+.why{background:var(--graphite);color:#fff}
+.why .wrap{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(28px,6vw,90px);align-items:center}
+.why h2{margin:0}.why h2 em{font-style:normal;color:var(--red)}
+.why p{margin:0 0 22px;max-width:46ch}
+.chips{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:10px}
+.chips li{border:1.5px solid rgba(255,255,255,.6);border-radius:999px;padding:8px 16px;font-weight:500}
+
+.people{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.person{background:#fff;border-radius:34px;padding:26px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px 20px;align-items:center}
+.person img{width:110px;height:110px;border-radius:50%;object-fit:cover;object-position:50% 8%;display:block}
+.person h3{font-size:clamp(2.4rem,4vw,3.2rem)}
+.person small{display:block;font-weight:300;text-transform:uppercase;margin-bottom:4px}
+.person ul{grid-column:1/-1;list-style:none;margin:14px 0 0;padding:0}
+.person li{padding:11px 0;border-top:1.5px solid rgba(23,25,28,.14)}
+
+.said{background:var(--green);color:#fff}
+.said blockquote{margin:0;font:400 clamp(3rem,7.6vw,6rem)/.92 Anton,sans-serif;text-transform:uppercase;max-width:15ch}
+.said cite{display:block;font-style:normal;font-weight:500;margin-top:18px;max-width:34rem}
+.said .more{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:clamp(34px,5vw,56px)}
+.said .more p{margin:0;background:rgba(255,255,255,.16);border-radius:26px;padding:22px;font-weight:500}
+.said .more span{display:block;font-weight:400;margin-top:10px;opacity:.9}
+
+.end .wrap{display:flex;flex-wrap:wrap;gap:24px 60px;align-items:end;justify-content:space-between}
+.end h2{margin:0;max-width:9ch}
+.end p{margin:16px 0 0;max-width:40ch}
+.end .pill{background:var(--ink);color:#fff;padding:17px 30px}
+.end .mail{display:block;margin-top:14px;font-weight:500;text-underline-offset:5px}
+footer{padding:20px 0 40px;color:#6B6E73;display:flex;flex-wrap:wrap;gap:8px 30px}
+
+@media (max-width:860px){
+ .head nav{display:none}.head .pill{margin-left:auto;padding:10px 16px}
+ .stage{min-height:760px}
+ .car{width:min(46vw,200px);transform:translate(-50%,-50%)}
+ .status{padding:0 58px}
+ .nub{width:50px;height:110px;margin-top:-55px}
+ .foot{flex-direction:column;align-items:flex-start;gap:10px}
+ .three,.people,.said .more,.why .wrap{grid-template-columns:1fr}
+ .card{min-height:0}
+ .person img{width:84px;height:84px}
+ .flag{height:44px;background-size:44px 44px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div style="background:#17201B;color:#fff;font:500 14px/1.4 system-ui,sans-serif;padding:9px 20px;position:relative;display:flex;flex-wrap:wrap;gap:6px 18px;align-items:center;z-index:2147483000"><span style="display:inline-flex;align-items:center;gap:8px"><svg style="height:12px;width:auto;color:#fff" viewBox="0 0 487.5 208.5" role="img" aria-label="Pete Owen Design logo"><path fill="currentColor" d="M487.5,10.6h-41.2v15.5c-15.3-10.6-33.9-16.8-53.8-16.8-30.1,0-57,14.1-74.4,36-17.4-21.9-44.3-36-74.4-36s-57,14.1-74.4,36c-17.4-21.9-44.3-36-74.4-36C44.8,9.4,3.8,48,0,96.9h-.3v100.3h41.2v-14.5c15.3,10.6,33.9,16.8,53.8,16.8,30.1,0,57-14.1,74.4-36,17.4,21.9,44.3,36,74.4,36s57-14.1,74.4-36c17.4,21.9,44.3,36,74.4,36,52.4,0,95.1-42.6,95.1-95.1s0-1.3,0-1.9h0V10.6h0ZM94.6,158.2c-29.7,0-53.8-24.2-53.8-53.8s24.2-53.8,53.8-53.8,53.8,24.2,53.8,53.8-24.2,53.8-53.8,53.8ZM243.5,158.2c-29.7,0-53.8-24.2-53.8-53.8s24.2-53.8,53.8-53.8,53.8,24.2,53.8,53.8-24.2,53.8-53.8,53.8ZM392.4,158.2c-29.7,0-53.8-24.2-53.8-53.8s24.2-53.8,53.8-53.8,53.8,24.2,53.8,53.8-24.2,53.8-53.8,53.8Z"/></svg> Design idea by Pete Owen Design. Not the live Veloce Driving website.</span><a href="../index.html" style="color:#fff;font-weight:700">Back to the start</a></div>
+<!--
+THESIS: Veloce puts you in a clear state: in control, on track, looked after. One car seen from above sits in the middle of a field of colour with a huge status word across it, and the colour, the car and the word change with the service. Refuses the supercar photo hero with three rounded cards.
+OWN-WORLD: Whole-screen fields of green, graphite and paper-white; a single top-down car; giant condensed capitals (Anton) overlapping the car; small light labels in brackets; light numerals like a timer; soft rounded tabs and pills; a chequered band; Hanken Grotesk for reading.
+STORY: A visitor sees one calm, striking picture, flicks between the three states to find theirs, reads what it involves, meets the founders and gets in touch.
+FIRST VIEWPORT: A green field; top-left three light numerals (50 years, 3 services, 2 founders); a green car from above in the centre with "(Driver development)" and "In control" across it; rounded arrow tabs at each side; one line of description and a link at the bottom.
+FORM: asked for by Pete from his reference images (a car-sharing app with cars seen from above on colour fields); no roll.
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
+-->
+<section class="stage" data-s="0" aria-roledescription="carousel" aria-label="Veloce services">
+  <div class="wrap" style="width:100%;display:flex;flex-direction:column;flex:1">
+    <header class="head">
+      <a class="brand" href="#" aria-label="Veloce home">Veloce</a>
+      <nav aria-label="Main"><a href="#services">Services</a><a href="#why">Approach</a><a href="#people">Kat &amp; Richard</a></nav>
+      <a class="pill" href="#contact">Get in touch</a>
+    </header>
+    <div class="clock">
+      <div class="live">Independent, and it shows</div>
+      <div class="nums"><div><b>50:</b><small>Years</small></div><div><b>03:</b><small>Services</small></div><div><b>02</b><small>Founders</small></div></div>
+    </div>
+    <div class="foot"><p data-line>Coaching on the road, on track and at UTAC Millbrook, for drivers and owners of performance cars.</p><a href="#services" data-link>Details →</a></div>
+  </div>
+  <div class="car" aria-hidden="true">
+    <svg viewBox="0 0 300 640">
+      <defs>
+        <clipPath id="shell"><path d="M150 18C196 18 232 34 240 78C246 112 250 150 246 190C242 240 236 280 238 330C240 380 254 410 254 460C254 520 248 574 232 596C212 616 180 620 150 620C120 620 88 616 68 596C52 574 46 520 46 460C46 410 60 380 62 330C64 280 58 240 54 190C50 150 54 112 60 78C68 34 104 18 150 18Z"/></clipPath>
+        <linearGradient id="gloss" x1="0" x2="1"><stop offset="0" stop-color="#000" stop-opacity=".22"/><stop offset=".22" stop-color="#fff" stop-opacity=".2"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/><stop offset=".8" stop-color="#000" stop-opacity=".06"/><stop offset="1" stop-color="#000" stop-opacity=".3"/></linearGradient>
+      </defs>
+      <ellipse class="g" cx="46" cy="238" rx="13" ry="8" transform="rotate(-18 46 238)"/><ellipse class="g" cx="254" cy="238" rx="13" ry="8" transform="rotate(18 254 238)"/>
+      <path class="b" d="M150 18C196 18 232 34 240 78C246 112 250 150 246 190C242 240 236 280 238 330C240 380 254 410 254 460C254 520 248 574 232 596C212 616 180 620 150 620C120 620 88 616 68 596C52 574 46 520 46 460C46 410 60 380 62 330C64 280 58 240 54 190C50 150 54 112 60 78C68 34 104 18 150 18Z"/>
+      <g clip-path="url(#shell)">
+        <rect class="st" x="124" y="0" width="18" height="640"/><rect class="st" x="158" y="0" width="18" height="640"/>
+        <path class="b2" d="M72 200C74 150 84 104 150 100C216 104 226 150 228 200C204 190 96 190 72 200Z" opacity=".55"/>
+        <rect x="0" y="0" width="300" height="640" fill="url(#gloss)"/>
+      </g>
+      <path class="seam" d="M70 150C100 132 200 132 230 150M150 20V128M64 300C60 360 60 420 66 470M236 300C240 360 240 420 234 470M62 322H78M222 322H238"/>
+      <path class="g" d="M86 236C108 214 192 214 214 236L202 296C182 286 118 286 98 296Z"/>
+      <path class="b2" d="M100 300C120 290 180 290 200 300L202 392C182 402 118 402 98 392Z"/>
+      <path class="g" d="M96 398C118 408 182 408 204 398L216 474C190 490 110 490 84 474Z"/>
+      <path class="g" d="M82 252L92 306L90 388L78 462C74 420 74 300 82 252ZM218 252L208 306L210 388L222 462C226 420 226 300 218 252Z"/>
+      <g class="g"><rect x="108" y="508" width="84" height="5" rx="2.5"/><rect x="108" y="520" width="84" height="5" rx="2.5"/><rect x="108" y="532" width="84" height="5" rx="2.5"/><rect x="108" y="544" width="84" height="5" rx="2.5"/></g>
+      <ellipse cx="90" cy="60" rx="17" ry="10" transform="rotate(-24 90 60)" fill="#fff" opacity=".9"/><ellipse cx="210" cy="60" rx="17" ry="10" transform="rotate(24 210 60)" fill="#fff" opacity=".9"/>
+      <path d="M78 600C110 612 190 612 222 600" fill="none" stroke="#E8283A" stroke-width="6" stroke-linecap="round"/>
+    </svg>
+  </div>
+  <div class="status" aria-live="polite"><small data-label>(Driver development)</small><h1 data-word>In control</h1></div>
+  <button class="nub l" type="button" aria-label="Previous service">‹</button>
+  <button class="nub r" type="button" aria-label="Next service">›</button>
+</section>
+<div class="flag" aria-hidden="true"></div>
+
+<main>
+<section class="sec" id="services">
+  <div class="wrap">
+    <h2><small>(Three services)</small>Pick your state.</h2>
+    <div class="three">
+      <a class="card" href="#contact"><small>(Driver development)</small><h3>In control</h3><p>Advanced road driving, car control and vehicle dynamics, and one-to-one track coaching, including bespoke days at UTAC Millbrook from £1,500.</p><span class="go">Discuss your driving →</span></a>
+      <a class="card" href="#contact"><small>(Motorsport management)</small><h3>On track</h3><p>Career strategy, team and championship selection, testing, budgets and sponsorship, for racing drivers and their families.</p><span class="go">Discuss a racing career →</span></a>
+      <a class="card" href="#contact"><small>(Private office)</small><h3>Looked after</h3><p>Sourcing, managing and advising on your cars through one experienced point of contact, free of dealer commissions.</p><span class="go">Discuss your requirements →</span></a>
+    </div>
+  </div>
+</section>
+
+<section class="sec why" id="why">
+  <div class="wrap">
+    <h2><small>(The Veloce Method)</small>Know the car. <em>Know yourself.</em></h2>
+    <div>
+      <p>Understand what the car is doing. Understand what you are doing to it. Drivers learn not simply what to do but why the car behaves as it does, and the same thinking runs through how Veloce manages a racing career or a collection.</p>
+      <ul class="chips"><li>Independent by design</li><li>Built around the individual</li><li>Long-term thinking</li><li>Trusted specialists</li><li>Discreet and personal</li></ul>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="people">
+  <div class="wrap">
+    <h2><small>(Who you deal with)</small>Kat or Richard.</h2>
+    <div class="people">
+      <div class="person"><img src="https://velocedriving.com/wp-content/uploads/2024/10/Kat-Impey-profile.png" alt="Kat Impey" loading="lazy"><div><small>(Co-founder)</small><h3>Kat Impey</h3></div><ul><li>Coaching high-performance drivers since 2004</li><li>Gold permit Porsche Driving Consultant, UK and Germany</li><li>Factory-approved by McLaren, Mercedes and Subaru</li><li>Raced from professional karting to Formula Three</li></ul></div>
+      <div class="person"><img src="https://velocedriving.com/wp-content/uploads/2024/10/Richard-Bott-profile.png" alt="Richard Bott" loading="lazy"><div><small>(Co-founder)</small><h3>Richard Bott</h3></div><ul><li>Racing since 1992, coaching for over 35 years</li><li>Senior Porsche Driving Consultant, Advanced Instructor Grade 1</li><li>Factory-approved by McLaren and Subaru</li><li>Driver management across BTCC, Formula 3 and IndyCar</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec said">
+  <div class="wrap">
+    <blockquote>“One of the best decisions we’ve made.”</blockquote>
+    <cite>Becky &amp; Simon C, parents of a 15-year-old driver taken from karting to his racing licence in 12 months</cite>
+    <div class="more">
+      <p>“Now I look forward to driving with excitement instead of anxiety.”<span>Emma R, international client</span></p>
+      <p>“Veloce Driving’s expertise in motorsport management is second to none.”<span>Sarah P, racer</span></p>
+      <p>“Kat and the Veloce Driving team helped me source the perfect car that met all my requirements.”<span>David K, international client</span></p>
+    </div>
+  </div>
+</section>
+<div class="flag" aria-hidden="true"></div>
+
+<section class="sec end" id="contact">
+  <div class="wrap">
+    <div><h2><small>(Next)</small>Let’s talk.</h2><p>Tell us what you are trying to achieve. Kat or Richard will reply in person.</p></div>
+    <div><a class="pill" href="mailto:enquiries@velocedriving.com">Email Kat &amp; Richard</a><a class="mail" href="mailto:enquiries@velocedriving.com">enquiries@velocedriving.com</a></div>
+  </div>
+</section>
+</main>
+<div class="wrap"><footer><span>Veloce Driving</span><span>Motorsport Management · Private Office · Driver Development</span></footer></div>
+
+<script>
+// The first screen flicks between the three services: colour, car and word change together.
+(function () {
+  var S = [
+    ['(Driver development)', 'In control', 'Coaching on the road, on track and at UTAC Millbrook, for drivers and owners of performance cars.'],
+    ['(Motorsport management)', 'On track', 'Career strategy, team selection, testing, budgets and sponsorship, for racing drivers and their families.'],
+    ['(Private office)', 'Looked after', 'Sourcing, managing and advising on your cars through one experienced point of contact.']
+  ];
+  var stage = document.querySelector('.stage'), st = stage.querySelector('.status'), at = 0;
+  function show(n) {
+    at = (n + S.length) % S.length;
+    stage.setAttribute('data-s', at);
+    st.querySelector('[data-label]').textContent = S[at][0];
+    st.querySelector('[data-word]').textContent = S[at][1];
+    stage.querySelector('[data-line]').textContent = S[at][2];
+    st.classList.remove('swap'); void st.offsetWidth; st.classList.add('swap');
+  }
+  stage.querySelector('.nub.l').addEventListener('click', function () { show(at - 1); });
+  stage.querySelector('.nub.r').addEventListener('click', function () { show(at + 1); });
+  stage.addEventListener('keydown', function (e) { if (e.key === 'ArrowLeft') show(at - 1); if (e.key === 'ArrowRight') show(at + 1); });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,550 @@
+<!doctype html>
+<html lang="en-GB" class="no-js">
+<head>
+<meta name="robots" content="noindex, nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Veloce: Direction K, Track Lines (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/*
+THESIS: The homepage is one circuit seen from above. A bundle of flat parallel ribbons runs from the top of the page to the bottom, and each of the three services is a corner on it. The track draws itself ahead of you as you scroll and lifts away behind you, so the page is always showing the next corner.
+WORLD: one plain field of Veloce red, four ribbons in ink, bone, apricot and pool blue, tall condensed capitals in bone, a clean grotesque for reading. No photographs, no texture: the shapes do the work.
+*/
+:root{
+  --field:#C2261C;
+  --ink:#17110F;
+  --bone:#F6EFE6;
+  --apricot:#FFB25B;
+  --pool:#7FD6CC;
+  --soft:rgba(246,239,230,.82);
+  --rule:rgba(246,239,230,.34);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;overflow-x:clip}
+body{margin:0;background:var(--field);color:var(--bone);font:400 1.0625rem/1.6 "Hanken Grotesk",system-ui,sans-serif;overflow-x:clip;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--bone);outline-offset:4px}
+h1,h2,h3{font-family:"Big Shoulders Display",Impact,sans-serif;font-weight:900;text-transform:uppercase;line-height:.9;letter-spacing:.005em;margin:0;text-wrap:balance}
+
+.sec{position:relative;background:var(--sf,var(--field))}
+
+/* colour separation: each stretch of the circuit runs over its own field */
+.say{--sf:#8E1C15}
+.svc.dd{--sf:#1F4A3B}
+.svc.mm{--sf:#17294A}
+.svc.po{--sf:#C2261C}
+.people{--sf:#8E1C15}
+.reviews{--sf:#1F4A3B}
+.finish{--sf:#C2261C}
+.svc.dd .lead,.svc.mm .lead,.reviews blockquote{color:var(--apricot)}
+.people .person h3{color:var(--apricot)}
+/* on the green and navy fields the dark lane would disappear, so it runs in Veloce red there */
+.svc.dd .trk path[stroke="#17110F"],.svc.mm .trk path[stroke="#17110F"],.reviews .trk path[stroke="#17110F"]{stroke:#E0392B}
+.trk{position:absolute;left:0;top:0;overflow:visible;pointer-events:none;z-index:0}
+.trk text{font:700 15px "Big Shoulders Display",sans-serif;letter-spacing:.08em;fill:var(--bone)}
+.trk .lbl{transition:opacity .6s ease}
+.in{position:relative;z-index:1}
+.art{display:none}
+
+/* ---------- first screen ---------- */
+.hero{min-height:max(100vh,720px);display:flex;flex-direction:column}
+.bar{display:flex;align-items:center;gap:clamp(20px,2.6vw,40px);padding:26px 0 0 4%;width:58%;position:relative;z-index:2}
+.mark{display:flex;align-items:baseline;gap:.5em;text-decoration:none;font-family:"Big Shoulders Display",sans-serif;font-weight:900;font-size:1.9rem;letter-spacing:.06em;text-transform:uppercase;line-height:1}
+.mark small{font-family:"Hanken Grotesk",sans-serif;font-weight:600;font-size:.72rem;letter-spacing:.22em}
+.bar nav{display:flex;gap:22px;font-size:.92rem;font-weight:500}
+.bar nav a{text-decoration:none;opacity:.92}
+.bar nav a:hover{text-decoration:underline;text-underline-offset:6px;opacity:1}
+.hero .in{margin:auto 0;padding:56px 0 64px 4%;width:52%}
+.hero h1{font-size:clamp(4rem,7.6vw,7.4rem);line-height:.86;margin:0 0 30px}
+.hero h1 .k{color:var(--ink)}
+.hero .sub{max-width:44ch;font-size:clamp(1.08rem,1.35vw,1.22rem);margin:0 0 30px}
+.ways{list-style:none;margin:0 0 30px;padding:0;max-width:520px;border-top:1px solid var(--rule)}
+.ways a{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:14px 2px;border-bottom:1px solid var(--rule);text-decoration:none;font-weight:600}
+.ways a span{font-weight:400;color:var(--soft);font-size:.95rem}
+.ways a svg{flex:none;width:18px;height:18px;transition:transform .35s cubic-bezier(.16,1,.3,1)}
+.ways a:hover svg{transform:translateX(5px)}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:14px 24px;border-radius:999px;background:var(--bone);color:var(--ink);text-decoration:none;font-weight:700;font-size:.95rem;transition:transform .3s cubic-bezier(.16,1,.3,1),background .3s}
+.btn:hover{transform:translateY(-2px);background:#fff}
+
+/* ---------- statement ---------- */
+.say{min-height:760px}
+.say h2{position:absolute;left:4%;top:9%;width:46%;font-size:clamp(3.4rem,6.4vw,6.2rem)}
+.say p{position:absolute;left:56%;top:58%;width:34%;margin:0;font-size:1.15rem}
+.say p b{font-weight:600}
+
+/* ---------- the three corners ---------- */
+.svc{min-height:max(880px,100vh);display:flex;align-items:center}
+.svc .in{padding:110px 0}
+.svc.dd .in{margin-left:50%;width:44%}
+.svc.mm .in{margin-left:5%;width:31%}
+.svc.po .in{margin-left:5%;width:38%;padding-top:200px}
+.svc h2{font-size:clamp(3.6rem,6vw,6rem);margin:0 0 22px}
+.svc .lead{font-family:"Big Shoulders Display",sans-serif;font-weight:800;text-transform:uppercase;font-size:clamp(1.5rem,2vw,1.9rem);line-height:1.05;margin:0 0 18px;color:var(--ink)}
+.svc p{margin:0 0 18px;max-width:52ch}
+.svc ul{list-style:none;margin:6px 0 26px;padding:0;border-top:1px solid var(--rule)}
+.svc li{padding:9px 0;border-bottom:1px solid var(--rule)}
+.price{display:flex;align-items:baseline;flex-wrap:wrap;gap:6px 14px;margin:0 0 24px}
+.price b{font-family:"Big Shoulders Display",sans-serif;font-weight:900;font-size:3rem;line-height:1}
+.price span{color:var(--soft);font-size:.95rem;max-width:30ch}
+.more{font-weight:700;text-underline-offset:6px;text-decoration-thickness:1.5px}
+.svc .quote{margin:34px 0 0;padding:0;font-weight:500;font-size:1.05rem}
+.quote cite{display:block;font-style:normal;color:var(--soft);font-size:.9rem;margin-top:4px;font-weight:400}
+
+/* ---------- the drivers ---------- */
+.people{min-height:820px;padding:120px 0 330px}
+.people h2{font-size:clamp(3.4rem,5.6vw,5.6rem);margin:0 0 56px 6%}
+.pair{display:grid;grid-template-columns:36% 36%;column-gap:16%;margin-left:6%}
+.person h3{font-size:clamp(2.4rem,3.6vw,3.4rem);margin:0 0 14px;color:var(--ink)}
+.person ul{list-style:none;margin:0;padding:0;border-top:1px solid var(--rule)}
+.person li{padding:10px 0;border-bottom:1px solid var(--rule)}
+.people .note{margin:34px 0 0 6%;color:var(--soft);max-width:60ch;font-size:.95rem}
+
+/* ---------- reviews ---------- */
+.reviews{padding:110px 8% 120px 20%}
+.reviews blockquote{margin:0 0 14px;font-family:"Big Shoulders Display",sans-serif;font-weight:800;text-transform:uppercase;font-size:clamp(2.4rem,4.4vw,4.2rem);line-height:.95;max-width:20ch}
+.reviews .by{margin:0 0 56px;color:var(--soft);max-width:52ch}
+.reviews ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px}
+.reviews li{border-top:2px solid var(--bone);padding-top:16px;font-weight:500}
+.reviews li span{display:block;color:var(--soft);font-weight:400;font-size:.9rem;margin-top:8px}
+
+/* ---------- finish ---------- */
+.finish{min-height:760px}
+.finish .in{padding:110px 0 0 20%;width:72%}
+.finish h2{font-size:clamp(4.2rem,9vw,8.6rem);margin:0 0 24px}
+.finish p{margin:0 0 24px;max-width:44ch;font-size:1.15rem}
+.mail{font-family:"Big Shoulders Display",sans-serif;font-weight:800;font-size:clamp(1.5rem,3vw,2.6rem);text-underline-offset:8px;text-decoration-thickness:2px;overflow-wrap:anywhere}
+.foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px 28px;padding:22px 4% 30px;border-top:1px solid var(--rule);font-size:.85rem;color:var(--soft);position:relative;z-index:1}
+
+/* ---------- phones ---------- */
+@media (max-width:899px){
+  body{font-size:1rem}
+  .art{display:block;height:150px}
+  .bar{width:auto;padding:20px 18px 0 54px;justify-content:space-between}
+  .bar nav a:not(.keep){display:none}
+  .hero{min-height:0}
+  .hero .art{margin-top:28px}
+  .hero .in{width:auto;margin:0;padding:64px 18px 56px 54px}
+  .ways a{display:grid;grid-template-columns:1fr auto;column-gap:12px}
+  .ways a span{grid-row:2;grid-column:1;font-size:.88rem}
+  .ways a svg{grid-row:1 / span 2;grid-column:2}
+  .hero h1{font-size:clamp(3.2rem,15vw,4.6rem);margin-bottom:22px}
+  .say{min-height:0;padding:70px 18px 80px 54px}
+  .say h2,.say p{position:static;width:auto}
+  .say h2{font-size:clamp(2.8rem,13vw,3.8rem);margin-bottom:22px}
+  .svc{min-height:0;display:block;padding-top:40px}
+  .svc .art{height:130px}
+  .svc .in,.svc.dd .in,.svc.mm .in,.svc.po .in{margin:0;width:auto;padding:62px 18px 80px 54px}
+  .svc h2{font-size:clamp(2.8rem,13vw,3.8rem)}
+  .people{min-height:0;padding:80px 18px 120px 54px}
+  .people h2,.pair,.people .note{margin-left:0}
+  .people h2{font-size:clamp(2.8rem,13vw,3.8rem);margin-bottom:36px}
+  .pair{grid-template-columns:1fr;row-gap:40px}
+  .reviews{padding:70px 18px 90px 54px}
+  .reviews ul{grid-template-columns:1fr}
+  .finish{min-height:0;padding-bottom:150px}
+  .finish .in{width:auto;padding:80px 18px 0 54px}
+  .finish h2{font-size:clamp(3.4rem,17vw,5rem)}
+  .mail{font-size:1.4rem}
+  .foot{padding:22px 18px 30px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div style="background:#17201B;color:#fff;font:500 14px/1.4 system-ui,sans-serif;padding:9px 20px;position:relative;display:flex;flex-wrap:wrap;gap:6px 18px;align-items:center;z-index:2147483000"><span style="display:inline-flex;align-items:center;gap:8px"><svg style="height:12px;width:auto;color:#fff" viewBox="0 0 487.5 208.5" role="img" aria-label="Pete Owen Design logo"><path fill="currentColor" d="M487.5,10.6h-41.2v15.5c-15.3-10.6-33.9-16.8-53.8-16.8-30.1,0-57,14.1-74.4,36-17.4-21.9-44.3-36-74.4-36s-57,14.1-74.4,36c-17.4-21.9-44.3-36-74.4-36C44.8,9.4,3.8,48,0,96.9h-.3v100.3h41.2v-14.5c15.3,10.6,33.9,16.8,53.8,16.8,30.1,0,57-14.1,74.4-36,17.4,21.9,44.3,36,74.4,36s57-14.1,74.4-36c17.4,21.9,44.3,36,74.4,36,52.4,0,95.1-42.6,95.1-95.1s0-1.3,0-1.9h0V10.6h0ZM94.6,158.2c-29.7,0-53.8-24.2-53.8-53.8s24.2-53.8,53.8-53.8,53.8,24.2,53.8,53.8-24.2,53.8-53.8,53.8ZM243.5,158.2c-29.7,0-53.8-24.2-53.8-53.8s24.2-53.8,53.8-53.8,53.8,24.2,53.8,53.8-24.2,53.8-53.8,53.8ZM392.4,158.2c-29.7,0-53.8-24.2-53.8-53.8s24.2-53.8,53.8-53.8,53.8,24.2,53.8,53.8-24.2,53.8-53.8,53.8Z"/></svg> Design idea by Pete Owen Design. Not the live Veloce Driving website.</span><a href="../index.html" style="color:#fff;font-weight:700">Back to the start</a></div>
+
+<section class="sec hero" data-route="hero" aria-label="Introduction">
+  <svg class="trk" aria-hidden="true"></svg>
+  <header class="bar">
+    <a class="mark" href="#">Veloce <small>Driving</small></a>
+    <nav aria-label="Main">
+      <a href="#develop">Coaching</a>
+      <a href="#manage">Racing careers</a>
+      <a href="#office">Private Office</a>
+      <a class="keep" href="#finish">Contact</a>
+    </nav>
+  </header>
+  <div class="art" data-art></div>
+  <div class="in">
+    <h1>Know the corner <span class="k">before you reach it.</span></h1>
+    <p class="sub">Racing drivers Kat Impey and Richard Bott coach drivers, guide racing careers and look after private clients’ cars. Independent by design, and built around the individual.</p>
+    <ul class="ways">
+      <li><a href="#develop">I want to drive better <span>Driver Development</span><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9h12M10 4l5 5-5 5"/></svg></a></li>
+      <li><a href="#manage">We have a young racing driver <span>Motorsport Management</span><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9h12M10 4l5 5-5 5"/></svg></a></li>
+      <li><a href="#office">I have cars to look after <span>Private Office</span><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9h12M10 4l5 5-5 5"/></svg></a></li>
+    </ul>
+    <a class="btn" href="mailto:enquiries@velocedriving.com">Email Kat and Richard</a>
+  </div>
+</section>
+
+<section class="sec say" data-route="say" aria-label="How Veloce works">
+  <svg class="trk" aria-hidden="true"></svg>
+  <h2 class="in">Independent by design.</h2>
+  <p class="in"><b>Long-term thinking, not short-term fixes.</b> No dealer or broker commissions. One experienced point of contact, whether the question is your driving, a racing career or the cars you own.</p>
+</section>
+
+<section class="sec svc dd" id="develop" data-route="dd" aria-labelledby="dd-h">
+  <svg class="trk" aria-hidden="true"></svg>
+  <div class="art" data-art></div>
+  <div class="in">
+    <h2 id="dd-h">Driver Development</h2>
+    <p class="lead">Understand what the car is doing. Understand what you are doing to it.</p>
+    <p>Coaching follows the Veloce Method: why the car behaves as it does, not only what to do. On the road, on track and at UTAC Millbrook, for keen drivers, owners of performance cars and parents of new ones.</p>
+    <ul>
+      <li>Car control and vehicle dynamics</li>
+      <li>Advanced road driver development</li>
+      <li>Track day coaching</li>
+      <li>Bespoke multi-stage programmes</li>
+    </ul>
+    <div class="price"><b>£1,500</b><span>UTAC Millbrook Course, one-to-one. Or a 25% deposit of £375.</span></div>
+    <a class="more" href="mailto:enquiries@velocedriving.com?subject=Driver%20Development">Ask about coaching</a>
+    <p class="quote">“My worries about him in a high-performance car completely vanished.”<cite>Alex V, luxury car owner, on a course for his son</cite></p>
+  </div>
+</section>
+
+<section class="sec svc mm" id="manage" data-route="mm" aria-labelledby="mm-h">
+  <svg class="trk" aria-hidden="true"></svg>
+  <div class="art" data-art></div>
+  <div class="in">
+    <h2 id="mm-h">Motorsport Management</h2>
+    <p class="lead">One programme. One direction.</p>
+    <p>For racing drivers and their families, including parents with no motorsport background whose child has shown real talent in karting.</p>
+    <ul>
+      <li>Career and pathway strategy</li>
+      <li>Team and championship selection</li>
+      <li>Contracts and budgets</li>
+      <li>Testing and race operations</li>
+      <li>Sponsorship and partnerships</li>
+    </ul>
+    <a class="more" href="mailto:enquiries@velocedriving.com?subject=Motorsport%20Management">Talk about a career</a>
+    <p class="quote">“Working with them is one of the best decisions we’ve made.”<cite>Becky and Simon C, parents of a young driver</cite></p>
+  </div>
+</section>
+
+<section class="sec svc po" id="office" data-route="po" aria-labelledby="po-h">
+  <svg class="trk" aria-hidden="true"></svg>
+  <div class="art" data-art></div>
+  <div class="in">
+    <h2 id="po-h">Private Office</h2>
+    <p class="lead">Personal. Discreet. Independent.</p>
+    <p>For private clients, families and the people who act for them. One experienced point of contact to source, manage and advise on your cars, free of dealer or broker commissions.</p>
+    <ul>
+      <li>Vehicle sourcing and acquisition</li>
+      <li>Servicing, storage and transport</li>
+      <li>Sales advisory and specialist projects</li>
+      <li>Private driver development</li>
+    </ul>
+    <a class="more" href="mailto:enquiries@velocedriving.com?subject=Private%20Office">Start a private conversation</a>
+    <p class="quote">“Kat and the Veloce Driving team helped me source the perfect car that met all my requirements.”<cite>David K, international client</cite></p>
+  </div>
+</section>
+
+<section class="sec people" id="people" data-route="people" aria-labelledby="pp-h">
+  <svg class="trk" aria-hidden="true"></svg>
+  <div class="in">
+    <h2 id="pp-h">Kat and Richard</h2>
+    <div class="pair">
+      <article class="person">
+        <h3>Kat Impey</h3>
+        <ul>
+          <li>Coaching drivers since 2004</li>
+          <li>Factory-approved by McLaren, Mercedes and Subaru</li>
+          <li>Raced from professional karting to Formula Three</li>
+        </ul>
+      </article>
+      <article class="person">
+        <h3>Richard Bott</h3>
+        <ul>
+          <li>Racing since 1992</li>
+          <li>Factory-approved by McLaren and Subaru</li>
+          <li>Driver management in BTCC, Formula 3 and IndyCar</li>
+        </ul>
+      </article>
+    </div>
+    <p class="note">The two founders are the people you speak to, from the first email onwards.</p>
+  </div>
+</section>
+
+<section class="sec reviews" data-route="reviews" aria-label="What clients say">
+  <svg class="trk" aria-hidden="true"></svg>
+  <div class="in">
+    <blockquote>“Now I look forward to driving with excitement instead of anxiety.”</blockquote>
+    <p class="by">Emma R, international client</p>
+    <ul>
+      <li>“Veloce Driving’s expertise in motorsport management is second to none.”<span>Sarah P, racer</span></li>
+      <li>“Working with them is one of the best decisions we’ve made.”<span>Becky and Simon C, racing parents</span></li>
+      <li>“Kat and the Veloce Driving team helped me source the perfect car that met all my requirements.”<span>David K, international client</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="sec finish" id="finish" data-route="finish" aria-labelledby="fin-h">
+  <svg class="trk" aria-hidden="true"></svg>
+  <div class="in" data-content>
+    <h2 id="fin-h">Where next?</h2>
+    <p>Your driving, a racing career or your cars. Start with an email to Kat and Richard.</p>
+    <a class="mail" href="mailto:enquiries@velocedriving.com">enquiries@velocedriving.com</a>
+  </div>
+</section>
+<footer class="foot"><span>Veloce Driving. Driver Development, Motorsport Management, Private Office.</span><span>Concept by Pete Owen Design. Headlines are proposed copy.</span></footer>
+
+<script>
+/*
+How the track works
+1. Each section describes its stretch of circuit as a list of corner points with a radius at each corner
+   (straights joined by true circular arcs, so hairpins are perfect half circles).
+2. That centre line is sampled every few pixels and offset sideways to make the parallel ribbons.
+3. Every frame, each section works out two numbers from where it sits in the window:
+   the head (how much of its track is drawn ahead) and the tail (how much has lifted away behind).
+   Both come straight from scroll position, so they run forwards and backwards. Values ease towards
+   their targets for a smooth glide. Only the visible stretch of each ribbon is drawn, via its dash.
+*/
+(function () {
+  document.documentElement.classList.remove('no-js');
+  var NS = 'http://www.w3.org/2000/svg';
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var COLS = ['#17110F', '#F6EFE6', '#FFB25B', '#7FD6CC'];
+  var secs = [].slice.call(document.querySelectorAll('[data-route]'));
+  var routes = [];
+  var t0 = null;
+  var W = 0, narrow = false;
+
+  // optional: ?y=1200 scrolls there on load (used for checking screenshots)
+  var qy = /[?&]y=(\d+)/.exec(location.search);
+
+  function rel(sec, el) {
+    var a = sec.getBoundingClientRect(), b = el.getBoundingClientRect();
+    return { x: b.left - a.left, y: b.top - a.top, w: b.width, h: b.height, bottom: b.bottom - a.top, right: b.right - a.left };
+  }
+
+  // Phone corner: a run of hairpins across the art strip, then back to the gutter.
+  function serp(a, g, w, vlist) {
+    var R = (w - 2 * g) / 8, y1 = a.y + 18, y2 = a.bottom - 26, back = a.bottom + 14;
+    vlist.push([g, y2, R], [g + 2 * R, y2, R], [g + 2 * R, y1, R], [g + 4 * R, y1, R], [g + 4 * R, y2, R],
+      [g + 6 * R, y2, R], [g + 6 * R, y1, R], [g + 8 * R, y1, R], [g + 8 * R, back, 22], [g, back, 22]);
+    return { x: g + R, y: y2 + R * 0.2 };
+  }
+
+  function plan(sec, w, H) {
+    var name = sec.getAttribute('data-route');
+    var R = Math.max(64, Math.min(0.075 * w, 115));
+    var v = [], label = null, top = -12, bot = H + 12;
+    if (narrow) {
+      var g = 24, art = sec.querySelector('[data-art]');
+      if (name === 'hero') {
+        var a = rel(sec, art);
+        v.push([g, a.y - 10, 0]);
+        serp(a, g, w, v);
+        v.push([g, bot, 0]);
+      } else if (art) {
+        var a2 = rel(sec, art);
+        v.push([g, top, 0]);
+        serp(a2, g, w, v);
+        v.push([g, bot, 0]);
+      } else if (name === 'finish') {
+        var c = rel(sec, sec.querySelector('[data-content]'));
+        v.push([g, top, 0], [g, c.bottom + 60, 40], [w * 1.2, c.bottom + 60, 0]);
+      } else {
+        v.push([g, top, 0], [g, bot, 0]);
+      }
+      return { v: v, label: label };
+    }
+    var heroX = 0.60 * w, ddX = 0.10 * w;
+    if (name === 'hero') {
+      v.push([heroX, top, 0], [heroX, 0.70 * H, R], [heroX + 2 * R, 0.70 * H, R], [heroX + 2 * R, 0.30 * H, R],
+        [heroX + 4 * R, 0.30 * H, R], [heroX + 4 * R, bot, 0]);
+    } else if (name === 'say') {
+      v.push([heroX + 4 * R, top, 0], [heroX + 4 * R, 0.22 * H, 0.2 * H], [ddX, 0.80 * H, 0.2 * H], [ddX, bot, 0]);
+    } else if (name === 'dd') {
+      v.push([ddX, top, 0], [ddX, 0.80 * H, R], [ddX + 2 * R, 0.80 * H, R], [ddX + 2 * R, 0.20 * H, R],
+        [ddX + 4 * R, 0.20 * H, R], [ddX + 4 * R, bot, 0]);
+      label = { x: ddX + R, y: 0.80 * H + 72, t: 'T1' };
+    } else if (name === 'mm') {
+      var x0 = ddX + 4 * R, x1 = 0.60 * w, R2 = Math.max(90, 0.11 * w);
+      v.push([x0, top, 0], [x0, 0.06 * H, 0.1 * w], [x1, 0.30 * H, 0.1 * w], [x1, 0.84 * H, R2],
+        [x1 + 2 * R2, 0.84 * H, R2], [x1 + 2 * R2, 0.18 * H, 0.06 * w], [w * 1.2, 0.18 * H, 0]);
+      label = { x: x1 + R2, y: 0.84 * H + 72, t: 'T2' };
+    } else if (name === 'po') {
+      v.push([w * 1.2, 0.12 * H, 0], [0.76 * w, 0.12 * H, 0.1 * w], [0.76 * w, 0.60 * H, 0.1 * w],
+        [0.50 * w, 0.60 * H, 0.08 * w], [0.50 * w, bot, 0]);
+      label = { x: 0.76 * w + 64, y: 0.60 * H + 30, t: 'T3' };
+    } else if (name === 'people') {
+      v.push([0.50 * w, top, 0], [0.50 * w, 0.84 * H, 0.12 * w], [ddX, 0.84 * H, 0.07 * w], [ddX, bot, 0]);
+    } else if (name === 'reviews') {
+      v.push([ddX, top, 0], [ddX, bot, 0]);
+    } else if (name === 'finish') {
+      var Rf = Math.max(64, 0.06 * w), xf = 0.78 * w;
+      v.push([ddX, top, 0], [ddX, 0.80 * H, 0.08 * w], [xf, 0.80 * H, Rf], [xf + 2 * Rf, 0.80 * H, Rf],
+        [xf + 2 * Rf, 0.18 * H, 0.05 * w], [w * 1.2, 0.18 * H, 0]);
+    }
+    return { v: v, label: label };
+  }
+
+  // Straights joined by circular arcs.
+  function centreline(v) {
+    var d = 'M' + v[0][0].toFixed(1) + ' ' + v[0][1].toFixed(1);
+    for (var i = 1; i < v.length - 1; i++) {
+      var p = v[i], a = v[i - 1], b = v[i + 1], r = p[2];
+      var ux = a[0] - p[0], uy = a[1] - p[1], la = Math.hypot(ux, uy);
+      var wx = b[0] - p[0], wy = b[1] - p[1], lb = Math.hypot(wx, wy);
+      ux /= la; uy /= la; wx /= lb; wy /= lb;
+      var th = Math.acos(Math.max(-1, Math.min(1, ux * wx + uy * wy)));
+      if (!r || th > Math.PI - 0.01) { d += ' L' + p[0].toFixed(1) + ' ' + p[1].toFixed(1); continue; }
+      var t = r / Math.tan(th / 2);
+      var lim = Math.min(i === 1 ? la : la / 2, i === v.length - 2 ? lb : lb / 2);
+      if (t > lim) { t = lim; r = t * Math.tan(th / 2); }
+      var sx = p[0] + ux * t, sy = p[1] + uy * t, ex = p[0] + wx * t, ey = p[1] + wy * t;
+      var cross = (-ux) * wy - (-uy) * wx;
+      d += ' L' + sx.toFixed(1) + ' ' + sy.toFixed(1) + ' A' + r.toFixed(1) + ' ' + r.toFixed(1) + ' 0 0 ' + (cross > 0 ? 1 : 0) + ' ' + ex.toFixed(1) + ' ' + ey.toFixed(1);
+    }
+    var z = v[v.length - 1];
+    return d + ' L' + z[0].toFixed(1) + ' ' + z[1].toFixed(1);
+  }
+
+  function build() {
+    W = document.documentElement.clientWidth;
+    narrow = W < 900;
+    var n = narrow ? 3 : 4, sw = narrow ? 9 : 20, gap = narrow ? 4 : 7, pitch = sw + gap;
+    routes = [];
+    secs.forEach(function (sec) {
+      var svg = sec.querySelector('.trk');
+      var H = sec.offsetHeight;
+      svg.setAttribute('width', W); svg.setAttribute('height', H);
+      svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+      svg.innerHTML = '';
+      var p = plan(sec, W, H);
+      var cl = document.createElementNS(NS, 'path');
+      cl.setAttribute('d', centreline(p.v)); cl.setAttribute('fill', 'none');
+      svg.appendChild(cl);
+      var L = cl.getTotalLength(), step = 3, N = Math.max(2, Math.ceil(L / step) + 1), P = [];
+      for (var k = 0; k < N; k++) { var q = cl.getPointAtLength(Math.min(L, k * step)); P.push([q.x, q.y]); }
+      svg.removeChild(cl);
+      var NR = [];
+      for (k = 0; k < N; k++) {
+        var A = P[Math.max(0, k - 1)], B = P[Math.min(N - 1, k + 1)];
+        var tx = B[0] - A[0], ty = B[1] - A[1], tl = Math.hypot(tx, ty) || 1;
+        NR.push([-ty / tl, tx / tl]);
+      }
+      var strands = [];
+      for (var s = 0; s < n; s++) {
+        var o = (s - (n - 1) / 2) * pitch, pts = [], cum = [0], d = '';
+        for (k = 0; k < N; k++) {
+          var x = P[k][0] + NR[k][0] * o, y = P[k][1] + NR[k][1] * o;
+          pts.push([x, y]);
+          if (k) cum.push(cum[k - 1] + Math.hypot(x - pts[k - 1][0], y - pts[k - 1][1]));
+          d += (k ? 'L' : 'M') + x.toFixed(1) + ' ' + y.toFixed(1);
+        }
+        var el = document.createElementNS(NS, 'path');
+        el.setAttribute('d', d); el.setAttribute('fill', 'none'); el.setAttribute('stroke', COLS[s]);
+        el.setAttribute('stroke-width', sw); el.setAttribute('stroke-linejoin', 'round'); el.setAttribute('stroke-linecap', 'butt');
+        svg.appendChild(el);
+        strands.push({ el: el, pts: pts, cum: cum, len: cum[N - 1] });
+      }
+      var lbl = null;
+      if (p.label) {
+        lbl = document.createElementNS(NS, 'text');
+        lbl.setAttribute('x', p.label.x); lbl.setAttribute('y', p.label.y);
+        lbl.setAttribute('text-anchor', 'middle'); lbl.setAttribute('class', 'lbl');
+        lbl.textContent = p.label.t; svg.appendChild(lbl);
+      }
+      // the little car rides lane two
+      var car = document.createElementNS(NS, 'g');
+      var cw = narrow ? 18 : 34, ch = narrow ? 8 : 15;
+      car.innerHTML = '<rect x="' + (-cw / 2) + '" y="' + (-ch / 2) + '" width="' + cw + '" height="' + ch + '" rx="' + (ch * 0.45) + '" fill="#F6EFE6"/>' +
+        '<rect x="' + (cw * 0.02) + '" y="' + (-ch * 0.32) + '" width="' + (cw * 0.2) + '" height="' + (ch * 0.64) + '" rx="' + (ch * 0.12) + '" fill="#17110F"/>' +
+        '<rect x="' + (-cw * 0.36) + '" y="' + (-ch * 0.5) + '" width="' + (cw * 0.12) + '" height="' + ch + '" fill="#C2261C"/>';
+      car.style.display = 'none';
+      svg.appendChild(car);
+      routes.push({ sec: sec, H: H, N: N, strands: strands, lbl: lbl, car: car, h: reduce ? 1 : 0, t: 0, last: sec === secs[secs.length - 1], hero: sec.getAttribute('data-route') === 'hero' });
+    });
+    paint(true);
+  }
+
+  function clamp(x) { return x < 0 ? 0 : x > 1 ? 1 : x; }
+  function ease(x) { return x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; }
+  function lenAt(st, f, N) {
+    var i = f * (N - 1), a = Math.floor(i), b = Math.min(N - 1, a + 1);
+    return st.cum[a] + (st.cum[b] - st.cum[a]) * (i - a);
+  }
+
+  function targets(r, now) {
+    if (reduce) return [1, 0];
+    var vh = window.innerHeight, top = r.sec.getBoundingClientRect().top, H = r.H;
+    var on = r.last ? vh : vh * 0.86, off = r.hero ? 0 : vh * 0.14;
+    var head = clamp((on - top) / H), tail = clamp((off - top) / H);
+    if (r.hero) head = t0 === null ? 0 : ease(clamp((now - t0) / 2200));
+    if (r.last) tail = 0;
+    return [head, tail];
+  }
+
+  function draw(r) {
+    var n = r.strands.length, stg = 0.05;
+    for (var s = 0; s < n; s++) {
+      var st = r.strands[s];
+      var e = clamp(r.h * (1 + stg * (n - 1)) - stg * s);
+      var b = clamp(r.t * (1 + stg * (n - 1)) - stg * (n - 1 - s));
+      if (r.h >= 0.999) e = 1;
+      var a0 = lenAt(st, b, r.N), a1 = lenAt(st, e, r.N), vis = Math.max(0, a1 - a0);
+      st.el.style.strokeDasharray = vis.toFixed(1) + ' ' + (st.len * 2 + 10).toFixed(1);
+      st.el.style.strokeDashoffset = (-a0).toFixed(1);
+    }
+    if (r.lbl) r.lbl.style.opacity = (r.h > 0.55 && r.t < 0.6) ? 1 : 0;
+    var showCar = !reduce && r.h > 0.01 && r.h < 0.985 && r.h - r.t > 0.03;
+    if (showCar) {
+      var lane = r.strands[1], f = clamp(r.h * (1 + stg * (n - 1)) - stg), i = Math.round(f * (r.N - 1));
+      var p = lane.pts[i], q = lane.pts[Math.max(0, i - 2)];
+      if (i < 2) { q = p; p = lane.pts[Math.min(r.N - 1, 2)]; }
+      var ang = Math.atan2(p[1] - q[1], p[0] - q[0]) * 180 / Math.PI;
+      r.car.setAttribute('transform', 'translate(' + p[0].toFixed(1) + ' ' + p[1].toFixed(1) + ') rotate(' + ang.toFixed(1) + ')');
+      r.car.style.display = '';
+    } else r.car.style.display = 'none';
+  }
+
+  var running = false;
+  function paint(snap) {
+    var now = performance.now(), moving = false;
+    routes.forEach(function (r) {
+      var tg = targets(r, now);
+      if (snap && (!r.hero || tg[0] >= 1)) { r.h = tg[0]; r.t = tg[1]; }
+      var k = r.hero && tg[0] < 1 ? 1 : 0.11;
+      r.h += (tg[0] - r.h) * k; r.t += (tg[1] - r.t) * 0.11;
+      if (Math.abs(tg[0] - r.h) > 0.0005 || Math.abs(tg[1] - r.t) > 0.0005) moving = true; else { r.h = tg[0]; r.t = tg[1]; }
+      if (r.hero && tg[0] < 1) moving = true;
+      draw(r);
+    });
+    return moving;
+  }
+  function loop() {
+    if (paint(false)) requestAnimationFrame(loop); else running = false;
+  }
+  function kick() { if (!running && !reduce) { running = true; requestAnimationFrame(loop); } }
+
+  var timer = null, lastW = 0, lastH = 0;
+  function rebuild() {
+    clearTimeout(timer);
+    timer = setTimeout(function () {
+      var h = document.documentElement.scrollHeight, w = document.documentElement.clientWidth;
+      if (w === lastW && h === lastH) return;
+      lastW = w; lastH = h; build(); kick();
+    }, 120);
+  }
+
+  function start() {
+    lastW = document.documentElement.clientWidth; lastH = document.documentElement.scrollHeight;
+    if (qy) window.scrollTo(0, +qy[1]);
+    build();
+    t0 = performance.now();
+    if (qy) t0 -= 3000;
+    kick();
+    window.addEventListener('scroll', kick, { passive: true });
+    if ('ResizeObserver' in window) new ResizeObserver(rebuild).observe(document.body);
+    else window.addEventListener('resize', rebuild);
+  }
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(start); else window.addEventListener('load', start);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,323 @@
+<!doctype html>
+<html class="no-js" lang="en-GB">
+<head>
+<meta name="robots" content="noindex, nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Veloce: Direction J, Spec Sheet (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+/*
+THESIS: Present Veloce the way a great car is presented: one studio photograph, a giant name, and a small, exact specification sheet. Every number on it is a real Veloce fact, so the page earns trust by being precise rather than loud.
+WORLD: pale silver studio wall, two red stripes as the only graphic device, the name set vertically and outlined in red up the edge, Anton for the big words, Barlow Condensed for labels, data in tidy tables with hairlines.
+*/
+:root{--wall:#E4E8EB;--wall-d:#ADB7BE;--ink:#15181B;--mute:#4D5560;--red:#D3221B;--hair:#B9C1C7;--paper:#F4F5F6}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--wall);color:var(--ink);font:400 1rem/1.55 Barlow,system-ui,sans-serif;overflow-x:hidden}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--red);outline-offset:4px}
+h1,h2,h3{margin:0;font-family:Anton,sans-serif;font-weight:400;text-transform:uppercase;line-height:.92;letter-spacing:.005em}
+.lab{font:600 .78rem/1.2 "Barlow Condensed",sans-serif;text-transform:uppercase;letter-spacing:.14em;color:var(--mute)}
+.wrap{max-width:1440px;margin:0 auto;padding:0 clamp(16px,3vw,44px)}
+
+/* first screen */
+.hero{position:relative;min-height:min(100vh,960px);overflow:hidden;
+  --cw:42vw; --cl:3vw; --floor:24%;
+  background:linear-gradient(180deg,#B3BDC4 0%,#CDD4D9 52%,#DEE3E6 calc(100% - var(--floor)),#F3F5F6 calc(100% - var(--floor)),#FBFCFC 100%)}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:clamp(20px,3vw,48px);min-height:inherit;padding-right:clamp(110px,12vw,190px);position:relative;z-index:3}
+.shot{align-self:end;position:relative}
+
+/* The stage: stripes are drawn by the page, the car is a cut-out that sits in front of them. */
+.stage{position:absolute;inset:0;z-index:1;pointer-events:none}
+.st{position:absolute;background:var(--red)}
+.st.wall{top:0;bottom:var(--floor);width:calc(var(--cw)*.075);transform-origin:50% 100%}
+.st.w1{left:calc(var(--cl) + var(--cw)*.405)}
+.st.w2{left:calc(var(--cl) + var(--cw)*.51)}
+.floorpair{position:absolute;bottom:0;height:var(--floor);left:calc(var(--cl) + var(--cw)*.405 - var(--cw)*.18*.6);width:calc(var(--cw)*.18*2.2)}
+.floorpair .st{inset:0;transform-origin:50% 0}
+.floorpair .f1{clip-path:polygon(27.27% 0,46.21% 0,40.91% 100%,6.82% 100%)}
+.floorpair .f2{clip-path:polygon(53.79% 0,72.73% 0,93.18% 100%,59.09% 100%)}
+.floorpair::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.28),rgba(255,255,255,0) 40%)}
+.car{position:absolute;left:var(--cl);width:var(--cw);bottom:calc(var(--floor) - var(--cw)*.025);z-index:2}
+.car img{display:block;width:100%;height:auto}
+.car .refl{position:absolute;left:0;width:100%;top:calc(100% - var(--cw)*.05);transform:scaleY(-1);opacity:.22;-webkit-mask-image:linear-gradient(to top,#000 0%,transparent 38%);mask-image:linear-gradient(to top,#000 0%,transparent 38%)}
+.car .shadow{position:absolute;left:6%;right:4%;bottom:calc(var(--cw)*.02);height:calc(var(--cw)*.06);background:radial-gradient(closest-side,rgba(20,24,28,.38),rgba(20,24,28,0));z-index:-1}
+
+/* first load: stripes draw up from the floor, then the car rolls in */
+@media (prefers-reduced-motion:no-preference){
+  .floorpair .st{animation:grow .55s cubic-bezier(.3,.7,.2,1) both}
+  .floorpair .f2{animation-delay:.08s}
+  .st.wall{animation:grow 1.1s cubic-bezier(.25,.8,.2,1) .45s both}
+  .st.w2{animation-delay:.6s}
+  .car{animation:roll 1.2s cubic-bezier(.2,.8,.2,1) .9s both}
+  .side h1,.side .lede,.side .spec{animation:rise .8s cubic-bezier(.2,.8,.2,1) both}
+  .side h1{animation-delay:1.2s}.side .lede{animation-delay:1.35s}.side .spec{animation-delay:1.5s}
+}
+@keyframes grow{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@keyframes roll{from{transform:translateX(-14%);opacity:0}to{transform:none;opacity:1}}
+@keyframes rise{from{transform:translateY(14px);opacity:0}to{transform:none;opacity:1}}
+
+/* the same two stripes carry on down the page */
+.carry{position:relative;height:clamp(70px,9vw,130px);--cw:42vw;--cl:3vw}
+/* the bands pick up exactly where the floor stripes leave the first screen */
+.carry{--pl:calc(var(--cl) + var(--cw)*.405 - var(--cw)*.18*.6);--pw:calc(var(--cw)*.18*2.2)}
+.carry .st{top:0;bottom:0;width:calc(var(--pw)*.3409);transform-origin:50% 0;transform:scaleY(0);transition:transform .9s cubic-bezier(.25,.8,.2,1)}
+.carry .w1{left:calc(var(--pl) + var(--pw)*.0682)}
+.carry .w2{left:calc(var(--pl) + var(--pw)*.5909);transition-delay:.12s}
+.carry.on .st{transform:scaleY(1)}
+.no-js .carry .st{transform:none}
+.side{display:flex;flex-direction:column;padding:28px 0 40px}
+.bar{display:flex;justify-content:space-between;align-items:center;gap:16px}
+.mark{font:400 1.35rem/1 Anton,sans-serif;letter-spacing:.38em;text-transform:uppercase;text-decoration:none}
+.bar nav{display:flex;gap:20px;font:600 .9rem/1 "Barlow Condensed",sans-serif;text-transform:uppercase;letter-spacing:.1em}
+.bar nav a{text-decoration:none}
+.bar nav a:hover{color:var(--red)}
+.side h1{font-size:clamp(3.2rem,6.4vw,6.2rem);margin:auto 0 18px}
+.side .lede{margin:0 0 30px;max-width:38ch;font-size:1.1rem;color:#262B31}
+.name{position:absolute;top:0;bottom:0;right:clamp(10px,1.6vw,26px);display:flex;align-items:center;pointer-events:none}
+.name span{writing-mode:vertical-rl;font:400 clamp(7rem,12.6vw,11.6rem)/.8 Anton,sans-serif;text-transform:uppercase;color:transparent;-webkit-text-stroke:2px var(--red);letter-spacing:.02em}
+
+/* spec tables */
+.spec{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:2px solid var(--ink)}
+.spec div{padding:12px 14px 14px 0;border-bottom:1px solid var(--hair)}
+.spec div+div{padding-left:14px;border-left:1px solid var(--hair)}
+.spec div:nth-child(3n+1){padding-left:0;border-left:0}
+.spec b{display:block;font:400 clamp(1.5rem,2.4vw,2.2rem)/1 Anton,sans-serif;margin-top:6px}
+.spec small{display:block;font-size:.84rem;color:var(--mute);margin-top:4px}
+
+
+
+/* the three models */
+.models{padding:clamp(56px,7vw,100px) 0}
+.models>.wrap>h2{font-size:clamp(2.6rem,5vw,4.4rem);margin-bottom:clamp(30px,4vw,56px)}
+.model{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:clamp(20px,4vw,64px);padding:clamp(30px,4vw,48px) 0;border-top:2px solid var(--ink)}
+.model h3{font-size:clamp(3rem,7vw,6.6rem);line-height:.86}
+.model .line{margin:18px 0 0;max-width:34ch;font-size:1.08rem}
+.model .ask{display:inline-flex;align-items:center;gap:10px;margin-top:22px;padding:12px 20px;background:var(--red);color:#fff;text-decoration:none;font:600 .92rem/1 "Barlow Condensed",sans-serif;text-transform:uppercase;letter-spacing:.12em;transition:background .2s}
+.model .ask:hover{background:var(--ink)}
+.model .ask svg{width:16px;height:16px}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;vertical-align:top;padding:11px 0;border-bottom:1px solid var(--hair)}
+th{width:34%;padding-right:18px;font:600 .8rem/1.5 "Barlow Condensed",sans-serif;text-transform:uppercase;letter-spacing:.12em;color:var(--mute)}
+td{font-weight:500}
+td.big{font:400 1.9rem/1 Anton,sans-serif}
+
+/* drivers */
+.drivers{background:var(--paper);padding:clamp(56px,7vw,100px) 0}
+.drivers .wrap{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1fr) minmax(0,1fr);gap:clamp(20px,3vw,44px)}
+.drivers h2{font-size:clamp(2.6rem,5vw,4.4rem)}
+.drivers .note{margin:16px 0 0;color:var(--mute);max-width:30ch}
+.driver img{display:block;width:100%;aspect-ratio:1;object-fit:cover;object-position:50% 0;filter:grayscale(1) contrast(1.05);margin-bottom:16px}
+.driver h3{font-size:clamp(2rem,3vw,2.7rem);margin-bottom:8px}
+
+/* what clients say */
+.say{background:var(--red);color:#fff;padding:clamp(56px,7vw,100px) 0}
+.say .wrap{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:clamp(28px,5vw,72px)}
+.say blockquote{margin:0;font:400 clamp(2.4rem,5vw,4.6rem)/.95 Anton,sans-serif;text-transform:uppercase}
+.say cite{display:block;font-style:normal;margin-top:18px;max-width:42ch;color:#FFE3E1}
+.say ul{list-style:none;margin:0;padding:0}
+.say li{padding:16px 0;border-top:1px solid rgba(255,255,255,.4);font-weight:500}
+.say li span{display:block;font-weight:400;font-size:.88rem;margin-top:4px;color:#FFE3E1}
+
+/* enquiries */
+.end{padding:clamp(64px,8vw,110px) 0 40px}
+.end .wrap>div:first-child{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:28px 60px;align-items:end}
+.end h2{font-size:clamp(3rem,7vw,6.4rem)}
+.end p{margin:0 0 16px;color:var(--mute);max-width:40ch}
+.end .mail{font:400 clamp(1.3rem,2.4vw,2rem)/1.1 Anton,sans-serif;text-underline-offset:6px;overflow-wrap:anywhere}
+.foot{margin-top:60px;padding-top:16px;border-top:2px solid var(--ink);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:.82rem;color:var(--mute)}
+
+@media (max-width:900px){
+  .hero{display:flex;flex-direction:column}
+  .hero .stage{order:2}
+  .hero .wrap{order:1}
+  .hero .name{order:3}
+  .hero,.hero .wrap{min-height:0}
+  .hero{--cw:92vw;--cl:4vw;--floor:18%;background:var(--wall)}
+  .hero .wrap{grid-template-columns:1fr;padding-right:clamp(16px,3vw,44px)}
+  .hero .shot{display:none}
+  .stage{position:relative;inset:auto;height:calc(var(--cw)*.62);background:linear-gradient(180deg,#B3BDC4 0%,#DEE3E6 82%,#F3F5F6 82%,#FBFCFC 100%)}
+  .carry{--cw:92vw;--cl:4vw;height:56px}
+  .side{padding-bottom:20px;order:-1}
+  .bar nav a:not(:last-child){display:none}
+  .side h1{margin-top:34px;padding-right:22%}
+  .side .lede{padding-right:20%}
+  .name{right:6px;top:70px;bottom:auto;align-items:flex-start}
+  .name span{font-size:clamp(4.4rem,22vw,7rem);-webkit-text-stroke:1.5px var(--red)}
+  .hero .spec{display:none}
+  .spec.mob{display:grid}
+  .model,.drivers .wrap,.say .wrap,.end .wrap>div:first-child{grid-template-columns:1fr}
+  .spec{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .spec div:nth-child(3n+1){padding-left:14px;border-left:1px solid var(--hair)}
+  .spec div:nth-child(2n+1){padding-left:0;border-left:0}
+}
+@media (min-width:901px){.spec.mob{display:none}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div style="background:#17201B;color:#fff;font:500 14px/1.4 system-ui,sans-serif;padding:9px 20px;position:relative;display:flex;flex-wrap:wrap;gap:6px 18px;align-items:center;z-index:2147483000"><span style="display:inline-flex;align-items:center;gap:8px"><svg style="height:12px;width:auto;color:#fff" viewBox="0 0 487.5 208.5" role="img" aria-label="Pete Owen Design logo"><path fill="currentColor" d="M487.5,10.6h-41.2v15.5c-15.3-10.6-33.9-16.8-53.8-16.8-30.1,0-57,14.1-74.4,36-17.4-21.9-44.3-36-74.4-36s-57,14.1-74.4,36c-17.4-21.9-44.3-36-74.4-36C44.8,9.4,3.8,48,0,96.9h-.3v100.3h41.2v-14.5c15.3,10.6,33.9,16.8,53.8,16.8,30.1,0,57-14.1,74.4-36,17.4,21.9,44.3,36,74.4,36s57-14.1,74.4-36c17.4,21.9,44.3,36,74.4,36,52.4,0,95.1-42.6,95.1-95.1s0-1.3,0-1.9h0V10.6h0ZM94.6,158.2c-29.7,0-53.8-24.2-53.8-53.8s24.2-53.8,53.8-53.8,53.8,24.2,53.8,53.8-24.2,53.8-53.8,53.8ZM243.5,158.2c-29.7,0-53.8-24.2-53.8-53.8s24.2-53.8,53.8-53.8,53.8,24.2,53.8,53.8-24.2,53.8-53.8,53.8ZM392.4,158.2c-29.7,0-53.8-24.2-53.8-53.8s24.2-53.8,53.8-53.8,53.8,24.2,53.8,53.8-24.2,53.8-53.8,53.8Z"/></svg> Design idea by Pete Owen Design. Not the live Veloce Driving website.</span><a href="../index.html" style="color:#fff;font-weight:700">Back to the start</a></div>
+<section class="hero">
+  <div class="stage" aria-hidden="false">
+    <span class="st wall w1"></span><span class="st wall w2"></span>
+    <div class="floorpair"><span class="st f1"></span><span class="st f2"></span></div>
+    <div class="car">
+      <span class="shadow"></span>
+      <img src="files/silver-car-1400.webp" width="1400" height="478" alt="A silver GT racing car, side-on, in front of Veloce's two red stripes">
+      <img class="refl" src="files/silver-car-1400.webp" width="1400" height="478" alt="">
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="shot"></div>
+    <div class="side">
+      <header class="bar">
+        <a class="mark" href="#">Veloce</a>
+        <nav><a href="#models">Services</a><a href="#drivers">Kat and Richard</a><a href="#contact">Enquiries</a></nav>
+      </header>
+      <h1>Built around the individual.</h1>
+      <p class="lede">Motorsport management, a private office for your cars, and driver development, from racing drivers Kat Impey and Richard Bott. Independent by design.</p>
+      <div class="spec">
+        <div><span class="lab">Services</span><b>3</b></div>
+        <div><span class="lab">Founders</span><b>2</b></div>
+        <div><span class="lab">Point of contact</span><b>1</b></div>
+        <div><span class="lab">Millbrook one-to-one</span><b>£1,500</b></div>
+        <div><span class="lab">Dealer commissions</span><b>None</b></div>
+        <div><span class="lab">Experience</span><b>50+ yrs</b><small>combined</small></div>
+      </div>
+    </div>
+  </div>
+  <div class="name" aria-hidden="true"><span>Veloce</span></div>
+</section>
+
+<div class="carry" aria-hidden="true"><span class="st w1"></span><span class="st w2"></span></div>
+
+<div class="wrap spec mob" aria-hidden="false" style="margin-top:22px">
+  <div><span class="lab">Services</span><b>3</b></div>
+  <div><span class="lab">Point of contact</span><b>1</b></div>
+  <div><span class="lab">Millbrook one-to-one</span><b>£1,500</b></div>
+  <div><span class="lab">Dealer commissions</span><b>None</b></div>
+</div>
+
+<section class="models" id="models">
+  <div class="wrap">
+    <h2>Three services. Full specification.</h2>
+
+    <article class="model">
+      <div>
+        <h3>Driver Development</h3>
+        <p class="line">Understand what the car is doing. Understand what you are doing to it.</p>
+        <a class="ask" href="mailto:enquiries@velocedriving.com?subject=Driver%20Development">Ask about coaching <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 8h11M9 4l4 4-4 4"/></svg></a>
+      </div>
+      <table>
+        <tr><th>Covers</th><td>Car control and vehicle dynamics, advanced road driving, track day coaching, bespoke multi-stage programmes</td></tr>
+        <tr><th>Method</th><td>The Veloce Method: why the car behaves as it does, not only what to do</td></tr>
+        <tr><th>Where</th><td>On the road, on track, and at UTAC Millbrook</td></tr>
+        <tr><th>For</th><td>Owners of performance cars, keen drivers, and parents of a new driver</td></tr>
+        <tr><th>Millbrook, one-to-one</th><td class="big">£1,500</td></tr>
+        <tr><th>Deposit</th><td>25%, £375</td></tr>
+      </table>
+    </article>
+
+    <article class="model">
+      <div>
+        <h3>Motorsport Management</h3>
+        <p class="line">One programme. One direction.</p>
+        <a class="ask" href="mailto:enquiries@velocedriving.com?subject=Motorsport%20Management">Talk about a career <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 8h11M9 4l4 4-4 4"/></svg></a>
+      </div>
+      <table>
+        <tr><th>Covers</th><td>Career and pathway strategy, team and championship selection, contracts, budgets</td></tr>
+        <tr><th>Also</th><td>Testing, race operations, sponsorship and partnership development</td></tr>
+        <tr><th>For</th><td>Racing drivers and their families, including parents new to motorsport</td></tr>
+        <tr><th>Approach</th><td>Long-term thinking, not short-term fixes</td></tr>
+      </table>
+    </article>
+
+    <article class="model">
+      <div>
+        <h3>Private Office</h3>
+        <p class="line">Personal. Discreet. Independent.</p>
+        <a class="ask" href="mailto:enquiries@velocedriving.com?subject=Private%20Office">Start a private conversation <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 8h11M9 4l4 4-4 4"/></svg></a>
+      </div>
+      <table>
+        <tr><th>Covers</th><td>Vehicle sourcing and acquisition, servicing, storage and transport</td></tr>
+        <tr><th>Also</th><td>Sales advisory, specialist projects, private driver development</td></tr>
+        <tr><th>For</th><td>Private clients, families, and the PAs, EAs and family offices who act for them</td></tr>
+        <tr><th>Contact</th><td>One experienced point of contact</td></tr>
+        <tr><th>Dealer or broker commissions</th><td class="big">None</td></tr>
+      </table>
+    </article>
+  </div>
+</section>
+
+<div class="carry" aria-hidden="true"><span class="st w1"></span><span class="st w2"></span></div>
+
+<section class="drivers" id="drivers">
+  <div class="wrap">
+    <div>
+      <h2>The drivers</h2>
+      <p class="note">Veloce is two people. These are their specifications.</p>
+    </div>
+    <article class="driver">
+      <img src="https://velocedriving.com/wp-content/uploads/2024/10/Kat-Impey-profile.png" alt="Kat Impey" loading="lazy">
+      <h3>Kat Impey</h3>
+      <table>
+        <tr><th>Role</th><td>Co-founder</td></tr>
+        <tr><th>Coaching since</th><td>2004</td></tr>
+        <tr><th>Raced</th><td>Professional karting to Formula Three</td></tr>
+        <tr><th>Factory approved</th><td>McLaren, Mercedes, Subaru</td></tr>
+      </table>
+    </article>
+    <article class="driver">
+      <img src="https://velocedriving.com/wp-content/uploads/2024/10/Richard-Bott-profile.png" alt="Richard Bott" loading="lazy">
+      <h3>Richard Bott</h3>
+      <table>
+        <tr><th>Role</th><td>Co-founder</td></tr>
+        <tr><th>Racing since</th><td>1992</td></tr>
+        <tr><th>Driver management</th><td>BTCC, Formula 3, IndyCar</td></tr>
+        <tr><th>Factory approved</th><td>McLaren, Subaru</td></tr>
+      </table>
+    </article>
+  </div>
+</section>
+
+<section class="say">
+  <div class="wrap">
+    <div>
+      <blockquote>“Working with them is one of the best decisions we’ve made.”</blockquote>
+      <cite>Becky and Simon C, parents of a 15-year-old driver taken from karting to his racing licence in 12 months</cite>
+    </div>
+    <ul>
+      <li>“Now I look forward to driving with excitement instead of anxiety.”<span>Emma R, international client</span></li>
+      <li>“Veloce Driving’s expertise in motorsport management is second to none.”<span>Sarah P, racer</span></li>
+      <li>“Kat and the Veloce Driving team helped me source the perfect car that met all my requirements.”<span>David K, international client</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="end" id="contact">
+  <div class="wrap">
+    <div>
+      <h2>Enquiries</h2>
+      <div>
+        <p>Tell us what you are trying to achieve, and which service it concerns.</p>
+        <a class="mail" href="mailto:enquiries@velocedriving.com">enquiries@velocedriving.com</a>
+      </div>
+    </div>
+    <div class="foot"><span>Veloce Driving. Motorsport Management, Private Office, Driver Development.</span><span>Concept by Pete Owen Design. Headlines are proposed copy; the car picture is a generated stand-in.</span></div>
+  </div>
+</section>
+<script>
+document.documentElement.classList.remove('no-js');
+(function(){
+  var bands=document.querySelectorAll('.carry');
+  var still=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(still||!('IntersectionObserver' in window)){bands.forEach(function(b){b.classList.add('on')});return;}
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target);}})},{threshold:.4});
+  bands.forEach(function(b){io.observe(b)});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta name="robots" content="noindex, nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Veloce — Direction C, Private Office (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#F4F5F2;--white:#FFFFFF;--ink:#15181B;--soft:#5A6066;--rule:#D3D6D1;--ox:#8A1722}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 1.0625rem/1.6 "Schibsted Grotesk",system-ui,sans-serif}
+h1,h2,h3{font-weight:500;line-height:1.04;letter-spacing:-.03em;margin:0;text-wrap:balance}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--ox);outline-offset:4px}
+.wrap{max-width:1160px;margin:0 auto;padding:0 28px}
+
+header{display:flex;align-items:center;gap:28px;padding:26px 0;border-bottom:1px solid var(--rule)}
+.logo{text-decoration:none;font-weight:700;font-size:1.3rem;letter-spacing:.18em;text-transform:uppercase;display:flex;align-items:center;gap:12px}
+.logo i{width:10px;height:10px;border-radius:50%;background:var(--ox);flex:none}
+nav{margin-left:auto;display:flex;gap:30px}
+nav a{text-decoration:none;padding:4px 0;border-bottom:1px solid transparent}nav a:hover{border-color:var(--ink)}
+.btn{display:inline-block;background:var(--ink);color:var(--white);font-weight:500;padding:14px 24px;border-radius:999px;text-decoration:none;transition:background .2s}
+.btn:hover{background:var(--ox)}
+.link{font-weight:500;text-underline-offset:6px;text-decoration-thickness:1px}
+.link:hover{color:var(--ox)}
+
+/* hero: say who you are, hear what Veloce does for you */
+.hero{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(28px,5vw,84px);align-items:start;padding:clamp(36px,5vw,72px) 0 clamp(48px,7vw,96px)}
+.hero h1{font-size:clamp(2.4rem,4.7vw,4.1rem)}
+.q .lead{margin:clamp(28px,3.4vw,44px) 0 0;padding:22px 0 10px;border-top:1px solid var(--ink);color:var(--soft)}
+.ask{margin:clamp(34px,5vw,60px) 0 0;display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(24px,5vw,80px);align-items:start;border-top:1px solid var(--ink);padding-top:26px}
+.ask p.lead{margin:0 0 14px;color:var(--soft)}
+.who{display:grid;gap:0;margin:0;padding:0;border:0}
+.who button{font:inherit;text-align:left;cursor:pointer;background:none;border:0;border-bottom:1px solid var(--rule);padding:16px 34px 16px 0;position:relative;font-size:1.3rem;letter-spacing:-.01em;color:var(--soft);transition:color .2s}
+.who button::after{content:"";position:absolute;right:4px;top:50%;width:10px;height:10px;margin-top:-5px;border-radius:50%;box-shadow:inset 0 0 0 1px var(--soft);transition:background .2s,box-shadow .2s}
+.who button:hover{color:var(--ink)}
+.who button[aria-pressed=true]{color:var(--ink);font-weight:500}
+.who button[aria-pressed=true]::after{background:var(--ox);box-shadow:none}
+.answer h2{font-size:clamp(1.7rem,3vw,2.3rem);margin-bottom:14px}
+.answer p{margin:0 0 22px;max-width:50ch;font-size:1.15rem;line-height:1.55}
+.answer .act{display:flex;flex-wrap:wrap;gap:14px 26px;align-items:center}
+.answer.swap{animation:fade .5s cubic-bezier(.16,1,.3,1)}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}}
+
+.band{background:var(--white);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.creds{display:grid;grid-template-columns:repeat(4,1fr);margin:0;padding:0;list-style:none}
+.creds li{padding:26px 22px 26px 0;color:var(--soft);font-size:.98rem}
+.creds li+li{border-left:1px solid var(--rule);padding-left:22px}
+.creds b{display:block;color:var(--ink);font-weight:500;font-size:1.3rem;letter-spacing:-.02em;margin-bottom:4px}
+
+.sec{padding:clamp(60px,9vw,130px) 0}
+.sec>h2,.two>h2{font-size:clamp(2.1rem,4.6vw,3.6rem);max-width:18ch}
+.two{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(28px,6vw,100px);align-items:start}
+.rows{margin:0;padding:0;list-style:none;border-top:1px solid var(--ink)}
+.rows li{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:20px;padding:22px 0;border-bottom:1px solid var(--rule)}
+.rows h3{font-size:1.45rem}
+.rows p{margin:0;color:var(--soft)}
+
+.people{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,60px);margin-top:clamp(30px,5vw,60px)}
+.photo{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;object-position:50% 0;background:var(--rule)}
+.scene{margin:0 0 24px}
+.scene img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;object-position:var(--pos,50% 70%);background:var(--rule)}
+.scene.swap img{animation:fade .6s cubic-bezier(.16,1,.3,1)}
+.person h3{font-size:2rem;margin:22px 0 4px}
+.person .role{color:var(--soft);margin:0 0 14px}
+.person ul{margin:0;padding:0;list-style:none}
+.person li{padding:10px 0;border-top:1px solid var(--rule)}
+
+.letter{background:var(--white);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.letter blockquote{margin:0;max-width:24ch;font-size:clamp(1.9rem,4.2vw,3.3rem);line-height:1.12;letter-spacing:-.03em;font-weight:500}
+.letter cite{display:block;font-style:normal;font-weight:400;font-size:1.0625rem;line-height:1.6;letter-spacing:0;color:var(--soft);margin-top:20px;max-width:30rem}
+.letter .more{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(20px,3vw,44px);margin-top:clamp(40px,6vw,72px)}
+.letter .more p{margin:0;padding-top:18px;border-top:1px solid var(--ink)}
+.letter .more span{display:block;color:var(--soft);font-size:.95rem;margin-top:10px}
+
+.close{text-align:left}
+.close h2{font-size:clamp(2.4rem,5.6vw,4.6rem);max-width:15ch}
+.close p{margin:20px 0 26px;max-width:46ch;font-size:1.15rem}
+.close .act{display:flex;flex-wrap:wrap;gap:14px 26px;align-items:center}
+.sign{margin-top:44px;font-style:italic;color:var(--soft)}
+footer{border-top:1px solid var(--rule);padding:24px 0 44px;color:var(--soft);font-size:.95rem;display:flex;flex-wrap:wrap;gap:8px 30px}
+
+@media (max-width:860px){
+ nav{display:none}header .btn{margin-left:auto;padding:11px 16px;font-size:.95rem;white-space:nowrap}
+ .hero,.two,.people,.rows li{grid-template-columns:1fr}
+ .scene img{aspect-ratio:4/3}
+ .rows li{gap:6px}
+ .creds{grid-template-columns:1fr 1fr}.creds li{padding:20px 14px 20px 0}.creds li+li{padding-left:14px}.creds li:nth-child(3){border-left:0;padding-left:0}.creds li:nth-child(n+3){border-top:1px solid var(--rule)}
+ .letter .more{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div style="background:#17201B;color:#fff;font:500 14px/1.4 system-ui,sans-serif;padding:9px 20px;position:relative;display:flex;flex-wrap:wrap;gap:6px 18px;align-items:center;z-index:2147483000"><span style="display:inline-flex;align-items:center;gap:8px"><svg style="height:12px;width:auto;color:#fff" viewBox="0 0 487.5 208.5" role="img" aria-label="Pete Owen Design logo"><path fill="currentColor" d="M487.5,10.6h-41.2v15.5c-15.3-10.6-33.9-16.8-53.8-16.8-30.1,0-57,14.1-74.4,36-17.4-21.9-44.3-36-74.4-36s-57,14.1-74.4,36c-17.4-21.9-44.3-36-74.4-36C44.8,9.4,3.8,48,0,96.9h-.3v100.3h41.2v-14.5c15.3,10.6,33.9,16.8,53.8,16.8,30.1,0,57-14.1,74.4-36,17.4,21.9,44.3,36,74.4,36s57-14.1,74.4-36c17.4,21.9,44.3,36,74.4,36,52.4,0,95.1-42.6,95.1-95.1s0-1.3,0-1.9h0V10.6h0ZM94.6,158.2c-29.7,0-53.8-24.2-53.8-53.8s24.2-53.8,53.8-53.8,53.8,24.2,53.8,53.8-24.2,53.8-53.8,53.8ZM243.5,158.2c-29.7,0-53.8-24.2-53.8-53.8s24.2-53.8,53.8-53.8,53.8,24.2,53.8,53.8-24.2,53.8-53.8,53.8ZM392.4,158.2c-29.7,0-53.8-24.2-53.8-53.8s24.2-53.8,53.8-53.8,53.8,24.2,53.8,53.8-24.2,53.8-53.8,53.8Z"/></svg> Design idea by Pete Owen Design. Not the live Veloce Driving website.</span><a href="../index.html" style="color:#fff;font-weight:700">Back to the start</a></div>
+<!--
+THESIS: Veloce answers one question first: who are you? The visitor says whether they have cars to look after, a child who races, or a wish to drive better, and the page replies to them alone, in the calm voice of a private office. Refuses the supercar photo hero with three rounded cards, and refuses black-and-gold luxury.
+OWN-WORLD: Cool paper-white ground, near-black type, one small oxblood dot and rule colour; Schibsted Grotesk at medium weight, large and tightly set; hairline rules, pill buttons, generous space; the two founders shown plainly at full size.
+STORY: A visitor is recognised, reads two sentences written for them, sees the two people they will deal with and their credentials, and enquires in confidence.
+FIRST VIEWPORT: "One experienced point of contact for your cars, your driving and your racing." in large medium-weight type; below a rule, three plain choices at left and the answer for the chosen one at right with its action.
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
+-->
+<div class="wrap">
+<header>
+  <a class="logo" href="#" aria-label="Veloce home"><i></i>Veloce</a>
+  <nav aria-label="Main"><a href="#services">Services</a><a href="#people">Kat &amp; Richard</a><a href="#approach">Approach</a><a href="#contact">Contact</a></nav>
+  <a class="btn" href="#contact">Enquire in confidence</a>
+</header>
+
+<main>
+<section class="hero">
+  <div class="q">
+    <h1>One experienced point of contact for your cars, your driving and your racing.</h1>
+    <p class="lead" id="askl">Which of these is closest to you?</p>
+    <div class="who" role="group" aria-labelledby="askl">
+        <button type="button" aria-pressed="true" data-k="office">I look after cars, mine or someone else’s</button>
+        <button type="button" aria-pressed="false" data-k="race">My child races, or I do</button>
+        <button type="button" aria-pressed="false" data-k="drive">I want to drive better</button>
+      </div>
+  </div>
+  <div class="reply">
+    <figure class="scene"><img src="https://velocedriving.com/wp-content/uploads/2026/08/Aston-VPO-Image.png" alt="A grey sports car parked outside a modern house at sunset"></figure>
+    <div class="answer" aria-live="polite">
+      <h2 data-t>Veloce Private Office</h2>
+      <p data-p>We source, manage and advise on cars for private clients, families and the PAs and family offices who act for them. You deal with one person, and our advice is independent of dealer and broker commissions.</p>
+      <div class="act"><a class="btn" href="#contact" data-a>Discuss your requirements</a><a class="link" href="#services">See all three services</a></div>
+    </div>
+  </div>
+</section>
+</main>
+</div>
+
+<div class="band"><div class="wrap">
+  <ul class="creds">
+    <li><b>50+ years</b>combined experience in motorsport and coaching</li>
+    <li><b>Porsche</b>highest instructor grade, UK and Germany</li>
+    <li><b>McLaren, Mercedes, Subaru</b>factory-approved coaching</li>
+    <li><b>Independent</b>no dealer or broker commissions</li>
+  </ul>
+</div></div>
+
+<div class="wrap">
+<section class="sec two" id="services">
+  <h2>Three services, one way of working.</h2>
+  <ul class="rows">
+    <li><h3>Private Office</h3><p>Vehicle sourcing and acquisition, ongoing management of servicing, storage and transport, sales advisory and specialist projects.</p></li>
+    <li><h3>Motorsport Management</h3><p>Career and pathway strategy, team and championship selection, contracts, budgets, testing and sponsorship, for drivers and their families.</p></li>
+    <li><h3>Driver Development</h3><p>Advanced road driving, car control and vehicle dynamics, and one-to-one track coaching. Bespoke days at UTAC Millbrook from £1,500.</p></li>
+  </ul>
+</section>
+
+<section class="sec" id="people" style="padding-top:0">
+  <h2>You will deal with Kat or Richard. Every time.</h2>
+  <div class="people">
+    <div class="person"><img class="photo" src="https://velocedriving.com/wp-content/uploads/2024/10/Kat-Impey-profile.png" alt="Kat Impey" loading="lazy"><h3>Kat Impey</h3><p class="role">Co-founder. Driver development and motorsport.</p><ul><li>Coaching high-performance drivers since 2004</li><li>Gold permit Porsche Driving Consultant, UK and Germany</li><li>Factory-approved by McLaren, Mercedes and Subaru</li><li>Raced from professional karting to Formula Three</li></ul></div>
+    <div class="person"><img class="photo" src="https://velocedriving.com/wp-content/uploads/2024/10/Richard-Bott-profile.png" alt="Richard Bott" loading="lazy"><h3>Richard Bott</h3><p class="role">Co-founder. Strategy, commercial and driver development.</p><ul><li>Racing since 1992, coaching for over 35 years</li><li>Senior Porsche Driving Consultant, Advanced Instructor Grade 1</li><li>Factory-approved by McLaren and Subaru</li><li>Driver management across BTCC, Formula 3 and IndyCar</li></ul></div>
+  </div>
+</section>
+</div>
+
+<div class="letter"><div class="wrap sec">
+  <blockquote>“To us, motorsport was the unknown … Working with them is one of the best decisions we’ve made.”</blockquote>
+  <cite>Becky &amp; Simon C, parents of a 15-year-old driver taken from karting to his racing licence in 12 months</cite>
+  <div class="more">
+    <p>“Now I look forward to driving with excitement instead of anxiety.”<span>Emma R, international client</span></p>
+    <p>“Kat and the Veloce Driving team helped me source the perfect car that met all my requirements.”<span>David K, international client</span></p>
+    <p>“My worries about him in a high-performance car completely vanished.”<span>Alex V, luxury car owner, on a course for his son</span></p>
+  </div>
+</div></div>
+
+<div class="wrap">
+<section class="sec two" id="approach">
+  <h2>Independent by design.</h2>
+  <ul class="rows">
+    <li><h3>Built around the individual</h3><p>We begin with what you are trying to achieve, not a predetermined package.</p></li>
+    <li><h3>Long-term thinking</h3><p>Decisions made for the long run of a career or a collection, not for a short-term fix.</p></li>
+    <li><h3>A trusted network</h3><p>Specialists in psychology, fitness, wellness and media, brought in when they are the right answer.</p></li>
+    <li><h3>Discreet and responsive</h3><p>Personal service for clients and for the people who represent them.</p></li>
+  </ul>
+</section>
+
+<section class="sec close" id="contact" style="padding-top:0">
+  <h2>Tell us what you are trying to achieve.</h2>
+  <p>Kat or Richard will reply in person. Your details are confidential and are not shared with anyone.</p>
+  <div class="act"><a class="btn" href="mailto:enquiries@velocedriving.com">Enquire in confidence</a><a class="link" href="mailto:enquiries@velocedriving.com">enquiries@velocedriving.com</a></div>
+  <p class="sign">Kat Impey &amp; Richard Bott</p>
+</section>
+<footer><span>Veloce Driving</span><span>Motorsport Management · Private Office · Driver Development</span></footer>
+</div>
+
+<script>
+// The first screen answers the visitor it is talking to.
+(function () {
+  var A = {
+    office: ['Veloce Private Office', 'We source, manage and advise on cars for private clients, families and the PAs and family offices who act for them. You deal with one person, and our advice is independent of dealer and broker commissions.', 'Discuss your requirements', 'https://velocedriving.com/wp-content/uploads/2026/08/Aston-VPO-Image.png', 'A grey sports car parked outside a modern house at sunset', '50% 70%'],
+    race: ['Veloce Motorsport Management', 'We help racing drivers and their families build the structure, strategy and support a serious career needs: which championship, which team, what budget, what next. No motorsport background required.', 'Discuss a racing career', 'https://velocedriving.com/wp-content/uploads/2026/08/Aston-GT3-3.png', 'A GT race car in a wet pit lane', '62% 60%'],
+    drive: ['Veloce Driver Development', 'One-to-one coaching on the road, on track and at UTAC Millbrook for drivers who want to understand their car, not just go faster in it. Tailored to you, your experience and your car.', 'Discuss your driving', 'https://velocedriving.com/wp-content/uploads/2026/08/296-UK-road.png', 'A red sports car on a winding country road', '50% 55%']
+  };
+  var box = document.querySelector('.answer');
+  var btns = [].slice.call(document.querySelectorAll('.who button'));
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      btns.forEach(function (o) { o.setAttribute('aria-pressed', o === b ? 'true' : 'false'); });
+      var a = A[b.getAttribute('data-k')];
+      box.querySelector('[data-t]').textContent = a[0];
+      box.querySelector('[data-p]').textContent = a[1];
+      box.querySelector('[data-a]').textContent = a[2];
+      var sc = document.querySelector('.scene'), im = sc.querySelector('img');
+      im.src = a[3]; im.alt = a[4]; im.style.setProperty('--pos', a[5]);
+      box.classList.remove('swap'); sc.classList.remove('swap'); void box.offsetWidth; box.classList.add('swap'); sc.classList.add('swap');
+    });
+  });
+})();
+</script>
+</body>
+</html>

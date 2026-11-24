@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta name="robots" content="noindex, nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Veloce: Direction H, Poster Set (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;800;900&family=Hanken+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/*
+THESIS: Veloce sells three different things to three different people, so the homepage is a set of three posters, one per service, each in its own colour: driver development yellow, motorsport management silver and red, private office racing green.
+WORLD: saturated colour fields, one studio-lit car per poster, a giant condensed word per poster set in a different place on each, small spec lines in the corners like a print run. Paper wall between the posters.
+*/
+:root{
+  --wall:#EFEDE7;--ink:#141414;--mute:#56544E;
+  --yel:#E2AC16;--yel-d:#B9790A;--yel-ink:#1B1505;
+  --sil:#DFE4E8;--sil-d:#A6B1B8;--red:#D3221B;
+  --grn:#294E3C;--grn-d:#1E3B2D;--cream:#ECE8DA;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--wall);color:var(--ink);font:400 1rem/1.55 "Hanken Grotesk",system-ui,sans-serif;overflow-x:hidden}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--red);outline-offset:4px}
+h1,h2,h3{margin:0;font-family:"Big Shoulders Display",sans-serif;font-weight:900;text-transform:uppercase;line-height:.86;letter-spacing:-.005em}
+.wrap{max-width:1440px;margin:0 auto;padding:0 clamp(16px,3vw,44px)}
+
+/* top bar */
+.bar{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:22px 0 18px}
+.mark{font:900 1.7rem/1 "Big Shoulders Display",sans-serif;letter-spacing:.32em;text-transform:uppercase;text-decoration:none;margin-right:-.32em}
+.bar nav{display:flex;gap:26px;font-size:.9rem;font-weight:500}
+.bar nav a{text-decoration:none}
+.bar nav a:hover{text-decoration:underline;text-underline-offset:5px}
+.bar .talk{border:1.5px solid var(--ink);padding:8px 16px;border-radius:999px}
+
+/* intro line */
+.intro{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,26rem);gap:24px 48px;align-items:end;padding:6px 0 22px;border-top:1.5px solid var(--ink)}
+.intro h1{font-size:clamp(2.6rem,5vw,4.6rem);padding-top:16px}
+.intro p{margin:0;color:var(--mute)}
+
+/* the set of three posters */
+.set{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(12px,1.6vw,24px);padding-bottom:clamp(40px,6vw,80px)}
+.poster{position:relative;display:block;aspect-ratio:4/5;overflow:hidden;text-decoration:none;container-type:inline-size;box-shadow:0 2px 2px rgba(0,0,0,.06),0 24px 40px -28px rgba(0,0,0,.55);transition:transform .5s cubic-bezier(.16,1,.3,1),box-shadow .5s}
+.poster:hover{transform:translateY(-6px);box-shadow:0 2px 2px rgba(0,0,0,.06),0 34px 50px -30px rgba(0,0,0,.6)}
+.poster img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.poster .word{position:absolute;white-space:nowrap;font-family:"Big Shoulders Display",sans-serif;font-weight:900;text-transform:uppercase;line-height:.8}
+.poster .tag{position:absolute;font-size:clamp(.66rem,2.7cqw,.8rem);line-height:1.35;font-weight:500;letter-spacing:.02em}
+.poster .tag b{display:block;font-weight:700;text-transform:uppercase;letter-spacing:.12em}
+.poster .spec{position:absolute;left:5.5cqw;right:5.5cqw;bottom:4.5cqw;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:3cqw;font-size:clamp(.62rem,2.5cqw,.76rem);line-height:1.3;padding-top:2.4cqw;border-top:1px solid currentColor}
+.poster .spec b{display:block;font:800 clamp(.95rem,4.4cqw,1.25rem)/1 "Big Shoulders Display",sans-serif;text-transform:uppercase;margin-bottom:3px}
+
+/* yellow: word fills the top edge */
+.p-yel{background:var(--yel);color:var(--yel-ink)}
+.p-yel .word{left:5cqw;top:5cqw;font-size:27cqw}
+.p-yel .tag{right:5.5cqw;top:31cqw;text-align:right}
+/* silver: word runs up the left edge in red */
+.p-sil{background:var(--sil);color:var(--ink)}
+.p-sil .word{left:4cqw;top:5cqw;writing-mode:vertical-rl;transform:rotate(180deg);font-size:21cqw;color:var(--red)}
+.p-sil .tag{right:5.5cqw;top:5.5cqw;text-align:right;max-width:30cqw}
+.p-sil .spec{color:var(--ink);left:0;right:0;bottom:0;padding:3cqw 5.5cqw 4.5cqw;border-top:0;background:rgba(236,239,241,.94)}
+/* green: word runs down the right edge in cream, outlined */
+.p-grn{background:var(--grn);color:var(--cream)}
+.p-grn .word{right:3.5cqw;top:5cqw;writing-mode:vertical-rl;font-size:19cqw;color:transparent;-webkit-text-stroke:.5cqw var(--cream)}
+.p-grn .tag{left:46cqw;top:5.5cqw}
+.p-grn .spec{left:5.5cqw;right:56cqw;grid-template-columns:1fr;gap:1.6cqw;border-top:0;padding-top:0}
+.p-grn .spec div{border-top:1px solid currentColor;padding-top:1.6cqw}
+
+/* one spread per service */
+.spread{position:relative;overflow:hidden;padding:clamp(56px,8vw,110px) 0}
+.spread .wrap{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:clamp(28px,5vw,80px);align-items:start}
+.spread h2{font-size:clamp(4.4rem,13vw,13rem);margin-left:-.04em}
+.spread .lead{font-size:clamp(1.15rem,1.6vw,1.4rem);line-height:1.45;margin:0 0 26px;max-width:36ch;font-weight:500}
+.spread ul{list-style:none;margin:0 0 28px;padding:0;columns:2;column-gap:28px}
+.spread li{break-inside:avoid;padding:10px 0;border-top:1px solid currentColor}
+.spread .for{margin:0 0 26px;font-size:.92rem}
+.spread .for b{display:block;text-transform:uppercase;letter-spacing:.12em;font-size:.74rem}
+.ask{display:inline-flex;align-items:center;gap:12px;font-weight:700;text-decoration:none;padding:14px 22px;border-radius:999px;transition:transform .3s cubic-bezier(.16,1,.3,1)}
+.ask:hover{transform:translateX(4px)}
+.ask svg{width:18px;height:18px}
+.side{font-size:.9rem}
+.side .big{font:900 clamp(3rem,6vw,5.2rem)/.85 "Big Shoulders Display",sans-serif;text-transform:uppercase;display:block;margin:6px 0 4px}
+.side p{margin:0 0 22px;max-width:30ch}
+.s-yel{background:var(--yel);color:var(--yel-ink)}
+.s-yel .ask{background:var(--yel-ink);color:var(--yel)}
+.s-sil{background:var(--sil);color:var(--ink)}
+.s-sil h2{color:var(--red)}
+.s-sil .ask{background:var(--red);color:#fff}
+.s-sil .wrap>div:first-child::after{content:"";display:block;width:clamp(70px,8vw,110px);height:clamp(120px,16vw,240px);margin-top:28px;background:linear-gradient(90deg,var(--red) 0 38%,transparent 38% 62%,var(--red) 62%)}
+.s-grn{background:var(--grn);color:var(--cream)}
+.s-grn h2{color:transparent;-webkit-text-stroke:2px var(--cream)}
+.s-grn .ask{background:var(--cream);color:var(--grn)}
+
+/* the two founders, as a small pair of prints */
+.people{padding:clamp(64px,8vw,110px) 0}
+.people .wrap{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1fr) minmax(0,1fr);gap:clamp(20px,3vw,40px);align-items:start}
+.people h2{font-size:clamp(3rem,6vw,5.4rem)}
+.people .note{margin:18px 0 0;color:var(--mute);max-width:32ch}
+.print{background:#fff;padding:14px 14px 20px;box-shadow:0 2px 2px rgba(0,0,0,.05),0 22px 36px -28px rgba(0,0,0,.5)}
+.print img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;object-position:50% 0;filter:grayscale(1) contrast(1.05)}
+.print h3{font-size:2.3rem;margin:16px 0 10px}
+.print ul{list-style:none;margin:0;padding:0;font-size:.9rem}
+.print li{padding:7px 0;border-top:1px solid #D9D6CE}
+
+/* what clients say */
+.say{background:var(--ink);color:#F3F1EA;padding:clamp(64px,8vw,110px) 0}
+.say .wrap{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:clamp(28px,5vw,72px)}
+.say blockquote{margin:0;font:900 clamp(2.6rem,5.6vw,5.2rem)/.9 "Big Shoulders Display",sans-serif;text-transform:uppercase}
+.say cite{display:block;font-style:normal;margin-top:18px;color:#B4B1A8;max-width:40ch}
+.say ul{list-style:none;margin:0;padding:0}
+.say li{padding:16px 0;border-top:1px solid #3A3936}
+.say li span{display:block;color:#9C998F;font-size:.88rem;margin-top:4px}
+
+/* contact */
+.end{padding:clamp(64px,8vw,110px) 0 40px}
+.end .wrap{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:28px 60px;align-items:end}
+.end h2{font-size:clamp(3.4rem,8vw,7.4rem)}
+.end p{margin:0 0 18px;color:var(--mute);max-width:40ch}
+.end .mail{font:800 clamp(1.4rem,2.4vw,2rem)/1.1 "Big Shoulders Display",sans-serif;text-transform:uppercase;letter-spacing:.02em;text-underline-offset:6px;overflow-wrap:anywhere}
+.foot{margin-top:56px;padding-top:18px;border-top:1.5px solid var(--ink);display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;font-size:.82rem;color:var(--mute)}
+
+@media (max-width:900px){
+  .bar nav a:not(.talk){display:none}
+  .intro{grid-template-columns:1fr}
+  .set{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px;margin:0 calc(-1 * clamp(16px,3vw,44px));padding:0 clamp(16px,3vw,44px) 44px;scrollbar-width:none}
+  .set::-webkit-scrollbar{display:none}
+  .poster{flex:0 0 82%;scroll-snap-align:center}
+  .poster:hover{transform:none}
+  .spread .wrap,.people .wrap,.say .wrap,.end .wrap{grid-template-columns:1fr}
+  .spread ul{columns:1}
+  .s-sil .wrap>div:first-child::after{height:70px;margin-top:18px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div style="background:#17201B;color:#fff;font:500 14px/1.4 system-ui,sans-serif;padding:9px 20px;position:relative;display:flex;flex-wrap:wrap;gap:6px 18px;align-items:center;z-index:2147483000"><span style="display:inline-flex;align-items:center;gap:8px"><svg style="height:12px;width:auto;color:#fff" viewBox="0 0 487.5 208.5" role="img" aria-label="Pete Owen Design logo"><path fill="currentColor" d="M487.5,10.6h-41.2v15.5c-15.3-10.6-33.9-16.8-53.8-16.8-30.1,0-57,14.1-74.4,36-17.4-21.9-44.3-36-74.4-36s-57,14.1-74.4,36c-17.4-21.9-44.3-36-74.4-36C44.8,9.4,3.8,48,0,96.9h-.3v100.3h41.2v-14.5c15.3,10.6,33.9,16.8,53.8,16.8,30.1,0,57-14.1,74.4-36,17.4,21.9,44.3,36,74.4,36s57-14.1,74.4-36c17.4,21.9,44.3,36,74.4,36,52.4,0,95.1-42.6,95.1-95.1s0-1.3,0-1.9h0V10.6h0ZM94.6,158.2c-29.7,0-53.8-24.2-53.8-53.8s24.2-53.8,53.8-53.8,53.8,24.2,53.8,53.8-24.2,53.8-53.8,53.8ZM243.5,158.2c-29.7,0-53.8-24.2-53.8-53.8s24.2-53.8,53.8-53.8,53.8,24.2,53.8,53.8-24.2,53.8-53.8,53.8ZM392.4,158.2c-29.7,0-53.8-24.2-53.8-53.8s24.2-53.8,53.8-53.8,53.8,24.2,53.8,53.8-24.2,53.8-53.8,53.8Z"/></svg> Design idea by Pete Owen Design. Not the live Veloce Driving website.</span><a href="../index.html" style="color:#fff;font-weight:700">Back to the start</a></div>
+<div class="wrap">
+  <header class="bar">
+    <a class="mark" href="#">Veloce</a>
+    <nav><a href="#drive">Driver Development</a><a href="#race">Motorsport Management</a><a href="#office">Private Office</a><a class="talk" href="#contact">Contact</a></nav>
+  </header>
+  <div class="intro">
+    <h1>Independent by design.</h1>
+    <p>Three services from racing drivers Kat Impey and Richard Bott. Pick the poster that is yours.</p>
+  </div>
+
+  <div class="set" aria-label="The three services">
+    <a class="poster p-yel" href="#drive">
+      <img src="files/yellow-rear-on-yellow.jpg" alt="A yellow sports car with a large rear wing, seen from behind on a yellow backdrop">
+      <span class="word">Control</span>
+      <span class="tag"><b>Driver Development</b>Road, track and Millbrook</span>
+      <span class="spec"><span><b>Road</b>Advanced road driving</span><span><b>Track</b>One-to-one coaching</span><span><b>£1,500</b>UTAC Millbrook day</span></span>
+    </a>
+    <a class="poster p-sil" href="#race">
+      <img src="files/silver-side-red-stripes.jpg" alt="A silver racing car side-on over two red stripes on a pale studio floor">
+      <span class="word">Career</span>
+      <span class="tag"><b>Motorsport<br>Management</b>For drivers and their families</span>
+      <span class="spec"><span><b>Strategy</b>Career and pathway</span><span><b>Teams</b>And championships</span><span><b>Budgets</b>And sponsorship</span></span>
+    </a>
+    <a class="poster p-grn" href="#office">
+      <img src="files/green-classic-from-above.jpg" alt="A green classic sports car seen from above on a pale curving track">
+      <span class="word">Discreet</span>
+      <span class="tag"><b>Private Office</b>Your cars, looked after</span>
+      <span class="spec"><div><b>Sourcing</b>Finding the right car</div><div><b>Managing</b>Servicing, storage, transport</div><div><b>Independent</b>No dealer commissions</div></span>
+    </a>
+  </div>
+</div>
+
+<section class="spread s-yel" id="drive">
+  <div class="wrap">
+    <div>
+      <h2>Control</h2>
+    </div>
+    <div>
+      <p class="lead">Driver Development. Understand what the car is doing. Understand what you are doing to it.</p>
+      <ul><li>Car control and vehicle dynamics</li><li>Advanced road driver development</li><li>Track day coaching</li><li>Bespoke multi-stage programmes</li></ul>
+      <div class="side"><span>UTAC Millbrook Course, one-to-one</span><span class="big">£1,500</span><p>Or a 25% deposit of £375 to book.</p></div>
+      <p class="for"><b>For</b>Owners of performance cars, keen drivers, and parents of a new driver in a fast car.</p>
+      <a class="ask" href="mailto:enquiries@velocedriving.com?subject=Driver%20Development">Ask about coaching <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9h12M10 4l5 5-5 5"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<section class="spread s-sil" id="race">
+  <div class="wrap">
+    <div>
+      <h2>Career</h2>
+    </div>
+    <div>
+      <p class="lead">Motorsport Management. One programme. One direction.</p>
+      <ul><li>Career and pathway strategy</li><li>Team and championship selection</li><li>Contracts and budgets</li><li>Testing and race operations</li><li>Sponsorship and partnerships</li></ul>
+      <p class="for"><b>For</b>Racing drivers, and parents with no motorsport background whose child has shown talent in karting.</p>
+      <a class="ask" href="mailto:enquiries@velocedriving.com?subject=Motorsport%20Management">Talk about a career <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9h12M10 4l5 5-5 5"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<section class="spread s-grn" id="office">
+  <div class="wrap">
+    <div>
+      <h2>Discreet</h2>
+    </div>
+    <div>
+      <p class="lead">Private Office. Personal. Discreet. Independent. One experienced point of contact.</p>
+      <ul><li>Vehicle sourcing and acquisition</li><li>Servicing, storage and transport</li><li>Sales advisory</li><li>Specialist projects</li><li>Private driver development</li></ul>
+      <p class="for"><b>For</b>Private clients, families, and the PAs, EAs and family offices who act for them. Independent of dealer or broker commissions.</p>
+      <a class="ask" href="mailto:enquiries@velocedriving.com?subject=Private%20Office">Start a private conversation <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9h12M10 4l5 5-5 5"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<section class="people">
+  <div class="wrap">
+    <div>
+      <h2>Kat and Richard</h2>
+      <p class="note">Every poster has the same two people behind it. Racing drivers, coaches, and the one point of contact you deal with.</p>
+    </div>
+    <article class="print">
+      <img src="https://velocedriving.com/wp-content/uploads/2024/10/Kat-Impey-profile.png" alt="Kat Impey">
+      <h3>Kat Impey</h3>
+      <ul><li>Co-founder</li><li>Coaching high-performance drivers since 2004</li><li>Factory-approved by McLaren, Mercedes and Subaru</li><li>Raced from professional karting to Formula Three</li></ul>
+    </article>
+    <article class="print">
+      <img src="https://velocedriving.com/wp-content/uploads/2024/10/Richard-Bott-profile.png" alt="Richard Bott">
+      <h3>Richard Bott</h3>
+      <ul><li>Co-founder</li><li>Racing since 1992</li><li>Factory-approved by McLaren and Subaru</li><li>Driver management across BTCC, Formula 3 and IndyCar</li></ul>
+    </article>
+  </div>
+</section>
+
+<section class="say">
+  <div class="wrap">
+    <div>
+      <blockquote>“Working with them is one of the best decisions we’ve made.”</blockquote>
+      <cite>Becky and Simon C, parents of a 15-year-old driver taken from karting to his racing licence in 12 months</cite>
+    </div>
+    <ul>
+      <li>“Now I look forward to driving with excitement instead of anxiety.”<span>Emma R, international client</span></li>
+      <li>“Veloce Driving’s expertise in motorsport management is second to none.”<span>Sarah P, racer</span></li>
+      <li>“Kat and the Veloce Driving team helped me source the perfect car that met all my requirements.”<span>David K, international client</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="end" id="contact">
+  <div class="wrap">
+    <h2>Which poster is yours?</h2>
+    <div>
+      <p>Tell us what you are trying to achieve, and which poster it is.</p>
+      <a class="mail" href="mailto:enquiries@velocedriving.com">enquiries@velocedriving.com</a>
+    </div>
+  </div>
+  <div class="wrap"><div class="foot"><span>Veloce Driving. Motorsport Management, Private Office, Driver Development.</span><span>Concept by Pete Owen Design. Headlines are proposed copy; car pictures are generated stand-ins.</span></div></div>
+</section>
+</body>
+</html>

@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta name="robots" content="noindex, nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Veloce — Direction B, Livery (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sofia+Sans:wght@400;600;700&family=Sofia+Sans+Extra+Condensed:ital,wght@1,800;1,900&display=swap" rel="stylesheet">
+<style>
+:root{--red:#E3241B;--ink:#101114;--white:#FFFFFF;--bone:#EEEDE8;--grey:#5C6067}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--white);color:var(--ink);font:400 1.0625rem/1.55 "Sofia Sans",system-ui,sans-serif;overflow-x:hidden}
+h1,h2,h3,.disp{font-family:"Sofia Sans Extra Condensed",sans-serif;font-style:italic;font-weight:900;line-height:.86;letter-spacing:0;text-transform:uppercase;margin:0;text-wrap:balance}
+a{color:inherit}
+:focus-visible{outline:4px solid var(--ink);outline-offset:3px}
+.onred :focus-visible,.onink :focus-visible{outline-color:var(--white)}
+.wrap{max-width:1240px;margin:0 auto;padding:0 24px}
+.kerb{height:22px;background:repeating-linear-gradient(90deg,var(--red) 0 56px,var(--white) 56px 112px)}
+
+header{display:flex;align-items:center;gap:28px;padding:16px 0}
+.logo{text-decoration:none;font:italic 900 2.5rem/.8 "Sofia Sans Extra Condensed",sans-serif;letter-spacing:.01em;text-transform:uppercase}
+.logo span{color:var(--red)}
+nav{margin-left:auto;display:flex;gap:28px;font-weight:700}
+nav a{text-decoration:none;padding:4px 0;border-bottom:3px solid transparent}nav a:hover{border-color:var(--red)}
+.btn{display:inline-block;background:var(--ink);color:var(--white);font-weight:700;padding:15px 26px;text-decoration:none;transform:skewX(-10deg);transition:background .2s,color .2s}
+.btn>span{display:inline-block;transform:skewX(10deg)}
+.btn:hover{background:var(--red)}
+.btn.w{background:var(--white);color:var(--ink)}.btn.w:hover{background:var(--ink);color:var(--white)}
+
+/* hero: a car's flank */
+.hero{background:var(--red);color:var(--white);position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;top:-3%;bottom:-3%;left:60%;width:9%;transform:skewX(-14deg);background:linear-gradient(90deg,var(--white) 0 22%,transparent 22% 46%,var(--white) 46% 100%)}
+.flank{position:absolute;top:-3%;bottom:-3%;left:72%;right:-14%;transform:skewX(-14deg);overflow:hidden;background:var(--ink)}
+.flank img{position:absolute;top:0;left:-20%;width:130%;height:100%;object-fit:cover;object-position:58% 70%;transform:skewX(14deg)}
+.hero .wrap{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,.7fr);gap:30px;align-items:center;padding-top:clamp(40px,6vw,84px);padding-bottom:clamp(48px,7vw,96px)}
+.hero h1{font-size:clamp(3.6rem,9.2vw,7.2rem)}
+.hero p{max-width:40ch;font-size:1.25rem;line-height:1.4;font-weight:600;margin:24px 0 30px}
+.cta{display:flex;flex-wrap:wrap;gap:16px}
+.roundel{justify-self:end;width:min(100%,270px);aspect-ratio:1;border-radius:50%;background:var(--white);color:var(--ink);display:grid;place-items:center;text-align:center;box-shadow:0 0 0 10px var(--ink)}
+.roundel b{display:block;font:italic 900 clamp(5rem,11vw,8.5rem)/.8 "Sofia Sans Extra Condensed",sans-serif}
+.roundel small{display:block;font-weight:700;font-size:.95rem;line-height:1.2;margin-top:8px}
+
+/* services on the starting grid */
+.grid{padding:clamp(56px,8vw,104px) 0}
+.grid h2{font-size:clamp(3rem,7.4vw,6rem);margin-bottom:clamp(30px,4vw,54px)}
+.slots{display:grid;gap:clamp(22px,3vw,36px)}
+.slot{display:grid;grid-template-columns:auto minmax(0,1fr) 240px;gap:clamp(16px,3vw,36px);align-items:start;width:min(100%,980px);padding:26px 26px 26px 0;border-top:8px solid var(--ink);border-right:8px solid var(--ink);text-decoration:none;transition:border-color .2s}
+.slot:nth-child(2){margin-left:auto}.slot:nth-child(3){margin-left:clamp(0px,12vw,180px)}
+.slot:hover{border-color:var(--red)}
+.slot .pos{font:italic 900 clamp(4.4rem,9vw,7rem)/.8 "Sofia Sans Extra Condensed",sans-serif;color:var(--red);min-width:1.2em}
+.slot h3{font-size:clamp(2.3rem,4.6vw,3.6rem)}
+.slot .who{display:block;font-weight:700;margin:8px 0 8px}
+.slot p{margin:0;max-width:52ch;color:var(--grey)}
+.slot img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;background:var(--bone);clip-path:polygon(16% 0,100% 0,84% 100%,0 100%)}
+
+.method{background:var(--ink);color:var(--white);padding:clamp(56px,8vw,104px) 0}
+.method .wrap{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:clamp(28px,6vw,80px);align-items:center}
+.method h2{font-size:clamp(3rem,7vw,6rem)}
+.method h2 span{color:var(--red)}
+.method p{margin:0 0 20px;max-width:46ch}
+.method ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:10px}
+.method li{background:var(--white);color:var(--ink);font-weight:700;padding:8px 16px;transform:skewX(-10deg)}
+.method li span{display:inline-block;transform:skewX(10deg)}
+
+.drivers{padding:clamp(56px,8vw,104px) 0}
+.drivers h2{font-size:clamp(3rem,7.4vw,6rem);margin-bottom:clamp(30px,4vw,54px)}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:clamp(22px,4vw,48px)}
+.card{background:var(--bone);display:grid;grid-template-columns:200px minmax(0,1fr);grid-template-rows:auto auto 1fr;align-items:start}
+.plate{grid-column:1/-1}
+.plate{background:var(--ink);color:var(--white);padding:16px 22px;display:flex;align-items:baseline;gap:14px}
+.plate b{font:italic 900 clamp(2.6rem,5vw,3.8rem)/.8 "Sofia Sans Extra Condensed",sans-serif;text-transform:uppercase}
+.plate i{font-style:normal;margin-left:auto;color:var(--red);font:italic 900 2rem/.8 "Sofia Sans Extra Condensed",sans-serif}
+.card img{display:block;width:100%;grid-row:2/4;aspect-ratio:4/5;object-fit:cover;object-position:50% 0;background:var(--bone)}
+.card p{margin:18px 22px 10px;font-weight:700}
+.card ul{list-style:none;margin:0;padding:0 22px 22px}
+.card li{padding:10px 0;border-top:2px solid rgba(16,17,20,.14)}
+
+.said{background:var(--red);color:var(--white);padding:clamp(56px,8vw,104px) 0;position:relative;overflow:hidden}
+.said blockquote{margin:0;max-width:16ch;font:italic 900 clamp(3rem,7.6vw,6rem)/.88 "Sofia Sans Extra Condensed",sans-serif;text-transform:uppercase}
+.said cite{display:block;font-style:normal;font-weight:600;margin-top:18px;max-width:46ch}
+.said .more{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(18px,3vw,40px);margin-top:clamp(36px,5vw,60px)}
+.said .more p{margin:0;padding-top:14px;border-top:4px solid var(--white);font-weight:600}
+.said .more span{display:block;font-weight:400;margin-top:8px}
+
+.go{padding:clamp(56px,8vw,104px) 0}
+.go .wrap{display:flex;flex-wrap:wrap;gap:24px 60px;align-items:end;justify-content:space-between}
+.go h2{font-size:clamp(3.4rem,9vw,6rem);max-width:10ch}
+.go p{margin:14px 0 0;max-width:40ch}
+.go a.mail{display:block;margin-top:16px;font-weight:700;text-underline-offset:5px}
+footer{padding:22px 0 40px;font-weight:600;color:var(--grey);display:flex;flex-wrap:wrap;gap:8px 30px}
+
+@media (max-width:860px){
+ nav{display:none}header .btn{margin-left:auto;padding:11px 18px}
+ .hero::before{display:none}
+ .flank{position:relative;top:0;bottom:0;left:0;right:0;transform:none;height:220px}.flank img{left:0;width:100%;transform:none}
+ .hero .wrap,.method .wrap,.duo{grid-template-columns:1fr}
+ .roundel{justify-self:start;width:170px;box-shadow:0 0 0 8px var(--ink)}
+ .card{grid-template-columns:112px minmax(0,1fr)}.card p{margin:14px 14px 8px}.card ul{padding:0 14px 16px}
+ .slot{grid-template-columns:auto minmax(0,1fr)}.slot img{grid-column:1/-1;aspect-ratio:16/9}
+ .slot:nth-child(n){margin-left:0;width:100%}.slot:nth-child(2){margin-left:auto;width:94%}
+ .said .more{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div style="background:#17201B;color:#fff;font:500 14px/1.4 system-ui,sans-serif;padding:9px 20px;position:relative;display:flex;flex-wrap:wrap;gap:6px 18px;align-items:center;z-index:2147483000"><span style="display:inline-flex;align-items:center;gap:8px"><svg style="height:12px;width:auto;color:#fff" viewBox="0 0 487.5 208.5" role="img" aria-label="Pete Owen Design logo"><path fill="currentColor" d="M487.5,10.6h-41.2v15.5c-15.3-10.6-33.9-16.8-53.8-16.8-30.1,0-57,14.1-74.4,36-17.4-21.9-44.3-36-74.4-36s-57,14.1-74.4,36c-17.4-21.9-44.3-36-74.4-36C44.8,9.4,3.8,48,0,96.9h-.3v100.3h41.2v-14.5c15.3,10.6,33.9,16.8,53.8,16.8,30.1,0,57-14.1,74.4-36,17.4,21.9,44.3,36,74.4,36s57-14.1,74.4-36c17.4,21.9,44.3,36,74.4,36,52.4,0,95.1-42.6,95.1-95.1s0-1.3,0-1.9h0V10.6h0ZM94.6,158.2c-29.7,0-53.8-24.2-53.8-53.8s24.2-53.8,53.8-53.8,53.8,24.2,53.8,53.8-24.2,53.8-53.8,53.8ZM243.5,158.2c-29.7,0-53.8-24.2-53.8-53.8s24.2-53.8,53.8-53.8,53.8,24.2,53.8,53.8-24.2,53.8-53.8,53.8ZM392.4,158.2c-29.7,0-53.8-24.2-53.8-53.8s24.2-53.8,53.8-53.8,53.8,24.2,53.8,53.8-24.2,53.8-53.8,53.8Z"/></svg> Design idea by Pete Owen Design. Not the live Veloce Driving website.</span><a href="../index.html" style="color:#fff;font-weight:700">Back to the start</a></div>
+<!--
+THESIS: Veloce wears a livery. The brand is painted like the side of a race car: slanted blocks of red, black and white, a number roundel, kerb stripes, and services lined up on a starting grid. Refuses the supercar photo hero with three rounded cards.
+OWN-WORLD: Racing red, black and white in hard slanted blocks; heavy italic condensed capitals (Sofia Sans Extra Condensed); skewed buttons; red-and-white kerb bands between sections; grid-slot brackets and position numbers.
+STORY: A visitor feels the pace and confidence of a racing outfit, picks their grid slot, meets the two drivers behind it and gets in touch.
+FIRST VIEWPORT: A red field cut by white and black livery stripes; "Faster starts with understanding." in huge italic capitals at left on solid red with two skewed buttons; white and black livery stripes and a white number roundel reading 50 at right.
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
+-->
+<div class="wrap">
+<header>
+  <a class="logo" href="#" aria-label="Veloce home">Vel<span>o</span>ce</a>
+  <nav aria-label="Main"><a href="#grid">Services</a><a href="#method">The Veloce Method</a><a href="#drivers">Kat &amp; Richard</a><a href="#contact">Contact</a></nav>
+  <a class="btn" href="#contact"><span>Get in touch</span></a>
+</header>
+</div>
+
+<main>
+<section class="hero onred">
+  <div class="wrap">
+    <div>
+      <h1>Faster starts with understanding.</h1>
+      <p>Motorsport management, private automotive advice and driver development from racing drivers Kat Impey and Richard Bott.</p>
+      <div class="cta"><a class="btn w" href="#grid"><span>Find your service</span></a><a class="btn" href="#drivers"><span>Meet Kat &amp; Richard</span></a></div>
+    </div>
+    <div class="roundel" role="img" aria-label="Over 50 years of combined experience"><div><b>50</b><small>years of combined<br>experience</small></div></div>
+  </div>
+  <div class="flank"><img src="https://velocedriving.com/wp-content/uploads/2026/08/Aston-GT3-3.png" alt="A GT race car in a wet pit lane"></div>
+</section>
+<div class="kerb" aria-hidden="true"></div>
+
+<section class="grid" id="grid">
+  <div class="wrap">
+    <h2>Pick your grid slot.</h2>
+    <div class="slots">
+      <a class="slot" href="#contact"><span class="pos">1</span><div><h3>Driver Development</h3><span class="who">For drivers and owners of performance cars</span><p>Advanced road driving, car control and vehicle dynamics, and one-to-one track coaching, including bespoke days at UTAC Millbrook from £1,500.</p></div><img src="https://velocedriving.com/wp-content/uploads/2024/09/Racing-driving-lesson-in-yellow-car.jpg" alt="A yellow sports car on track during a coaching session" loading="lazy"></a>
+      <a class="slot" href="#contact"><span class="pos">2</span><div><h3>Motorsport Management</h3><span class="who">For racing drivers and their families</span><p>Career strategy, team and championship selection, testing, budgets and sponsorship. One programme, one direction, from karting onwards.</p></div><img src="https://velocedriving.com/wp-content/uploads/2024/09/Kat-coaching-junior-race-driver.jpg" alt="Kat talking with a young racing driver beside his car in the pit lane" loading="lazy"></a>
+      <a class="slot" href="#contact"><span class="pos">3</span><div><h3>Private Office</h3><span class="who">For private clients, families and those who act for them</span><p>Sourcing, managing and advising on your cars through one experienced point of contact. Personal, discreet and free of dealer commissions.</p></div><img src="https://velocedriving.com/wp-content/uploads/2024/09/Richard-with-client-standing-next-to-vintage-porsche.jpg" alt="Richard and a client standing beside a classic sports car" loading="lazy"></a>
+    </div>
+  </div>
+</section>
+
+<section class="method onink" id="method">
+  <div class="wrap">
+    <h2>Know what the car is doing. <span>Know what you are doing to it.</span></h2>
+    <div>
+      <p>The Veloce Method develops understanding, awareness and technique, so drivers learn not simply what to do but why the car behaves as it does. The same thinking runs through how Veloce manages a racing career or a collection.</p>
+      <ul><li><span>Independent by design</span></li><li><span>Built around the individual</span></li><li><span>Long-term thinking</span></li><li><span>Trusted specialists</span></li><li><span>Discreet and personal</span></li></ul>
+    </div>
+  </div>
+</section>
+<div class="kerb" aria-hidden="true"></div>
+
+<section class="drivers" id="drivers">
+  <div class="wrap">
+    <h2>Your drivers.</h2>
+    <div class="duo">
+      <div class="card"><div class="plate"><b>K. Impey</b><i>Coach</i></div><img src="https://velocedriving.com/wp-content/uploads/2024/10/Kat-Impey-profile.png" alt="Kat Impey" loading="lazy"><p>Co-founder. Driver development and motorsport.</p><ul><li>Coaching high-performance drivers since 2004</li><li>Gold permit Porsche Driving Consultant, UK and Germany</li><li>Factory-approved by McLaren, Mercedes and Subaru</li><li>Raced from professional karting to Formula Three</li></ul></div>
+      <div class="card"><div class="plate"><b>R. Bott</b><i>Coach</i></div><img src="https://velocedriving.com/wp-content/uploads/2024/10/Richard-Bott-profile.png" alt="Richard Bott" loading="lazy"><p>Co-founder. Strategy, commercial and driver development.</p><ul><li>Racing since 1992, coaching for over 35 years</li><li>Senior Porsche Driving Consultant, Advanced Instructor Grade 1</li><li>Factory-approved by McLaren and Subaru</li><li>Driver management across BTCC, Formula 3 and IndyCar</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<section class="said onred">
+  <div class="wrap">
+    <blockquote>“One of the best decisions we’ve made.”</blockquote>
+    <cite>Becky &amp; Simon C, parents of a 15-year-old driver taken from karting to his racing licence in 12 months</cite>
+    <div class="more">
+      <p>“Now I look forward to driving with excitement instead of anxiety.”<span>Emma R, international client</span></p>
+      <p>“Veloce Driving’s expertise in motorsport management is second to none.”<span>Sarah P, racer</span></p>
+      <p>“Kat’s enthusiasm for driving is infectious.”<span>Mark S, regular track day client</span></p>
+    </div>
+  </div>
+</section>
+<div class="kerb" aria-hidden="true"></div>
+
+<section class="go" id="contact">
+  <div class="wrap">
+    <div><h2>Lights out. Let’s talk.</h2><p>Tell us what you are trying to achieve. Kat or Richard will reply in person.</p></div>
+    <div><a class="btn" href="mailto:enquiries@velocedriving.com"><span>Email Kat &amp; Richard</span></a><a class="mail" href="mailto:enquiries@velocedriving.com">enquiries@velocedriving.com</a></div>
+  </div>
+</section>
+</main>
+<div class="wrap"><footer><span>Veloce Driving</span><span>Motorsport Management · Private Office · Driver Development</span></footer></div>
+</body>
+</html>
