@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Veloce Driving · M Drive In (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,300..600&family=Newsreader:ital,opsz,wght@0,6..72,300..500;1,6..72,300..500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0a0c0e;--paper:#e8ebed;--mute:#a3abb2;--dim:#6f787f;--red:#cf3f2e;
+  --wide:"Archivo",system-ui,sans-serif;--serif:"Newsreader",Georgia,serif;
+  /* where the track disappears in track-3.jpg */
+  --vx:50%;--vy:44%;
+}
+*{box-sizing:border-box}
+html{background:var(--ink)}
+body{margin:0;background:var(--ink);color:var(--paper);font-family:var(--serif);-webkit-font-smoothing:antialiased}
+.cap{font-family:var(--wide);font-stretch:125%;text-transform:uppercase;letter-spacing:.32em;font-size:.68rem}
+
+/* top bar */
+.top{position:fixed;inset:0 0 auto;z-index:20;display:flex;justify-content:space-between;align-items:center;padding:1.3rem clamp(1rem,4vw,2.6rem);pointer-events:none}
+.top a{pointer-events:auto;color:var(--paper);text-decoration:none}
+.mark{font-family:var(--wide);font-stretch:125%;font-weight:500;letter-spacing:.42em;font-size:.82rem}
+
+/* the drive: a tall section whose stage stays put while you scroll */
+.drive{position:relative;height:620vh}
+.stage{position:sticky;top:0;height:100svh;overflow:hidden;background:#111}
+.road,.blur{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:var(--vx) var(--vy);transform-origin:var(--vx) var(--vy);will-change:transform}
+/* how dark the film is: lower the first number to go darker, raise it to go lighter */
+.road{filter:brightness(.6) contrast(1.14)}
+.road video,.road img{width:100%;height:100%;object-fit:cover;object-position:inherit}
+/* a blurred copy round the edges gives the feeling of speed when you scroll fast */
+.blur{filter:blur(10px);opacity:0;
+  -webkit-mask:radial-gradient(ellipse 46% 42% at var(--vx) var(--vy),transparent 55%,#000 100%);
+          mask:radial-gradient(ellipse 46% 42% at var(--vx) var(--vy),transparent 55%,#000 100%)}
+.shade{position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(rgba(5,6,7,.34),rgba(5,6,7,.34)),radial-gradient(ellipse 80% 70% at var(--vx) var(--vy),transparent 30%,rgba(5,6,7,.65) 100%),linear-gradient(to bottom,rgba(5,6,7,.55),transparent 22%,transparent 70%,rgba(5,6,7,.6))}
+.flash{position:absolute;inset:0;background:var(--ink);opacity:0;pointer-events:none}
+
+/* boards: words placed down the track that come towards you and pass by */
+.board{position:absolute;left:var(--vx);top:var(--vy);width:min(34rem,80vw);transform-origin:0 0;will-change:transform,opacity;opacity:0;pointer-events:none}
+.board > div{transform:translate(-50%,-50%)}
+.board.left > div{transform:translate(-100%,-50%);text-align:right}
+.board.right > div{transform:translate(0,-50%)}
+.board h1{margin:0;font-family:var(--wide);font-stretch:125%;font-weight:300;font-size:5.4rem;letter-spacing:.24em;line-height:1;margin-right:-.24em;text-align:center}
+.board h1 span{display:block;font-size:.2em;letter-spacing:.9em;margin-top:1.4rem;color:var(--mute)}
+.board h2{margin:.5rem 0 0;font-family:var(--wide);font-stretch:125%;font-weight:300;font-size:2.6rem;letter-spacing:.06em;line-height:1.05;text-transform:uppercase}
+.board p{margin:.8rem 0 0;font-size:1.35rem;line-height:1.35;font-style:italic;color:var(--paper)}
+.board .num{color:var(--red)}
+.board .line{font-size:2.3rem;font-style:normal;font-weight:300;line-height:1.15;text-align:center}
+.board{text-shadow:0 2px 24px rgba(0,0,0,.55)}
+
+/* distance readout, like a lap timer */
+.hud{position:absolute;left:clamp(1rem,4vw,2.6rem);right:clamp(1rem,4vw,2.6rem);bottom:1.4rem;display:flex;align-items:center;gap:1.2rem;color:var(--mute)}
+.hud .track{flex:1;height:1px;background:rgba(232,235,237,.25);position:relative}
+.hud .track i{position:absolute;left:0;top:-1px;height:3px;width:0;background:var(--red)}
+.hud b{font-weight:400;color:var(--paper);font-variant-numeric:tabular-nums;min-width:5.5ch;text-align:right}
+.hint{position:absolute;left:50%;bottom:4.2rem;transform:translateX(-50%);color:var(--mute);transition:opacity .6s}
+
+/* after the drive: the normal page */
+main{position:relative;z-index:2;background:var(--ink)}
+.wrap{max-width:74rem;margin:0 auto;padding:0 clamp(1.2rem,6vw,5rem)}
+.sec{padding:clamp(4.5rem,11vw,9rem) 0;border-top:1px solid rgba(232,235,237,.12)}
+.sec:first-child{border-top:0}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,6vw,6rem);align-items:start}
+.sec h2{margin:.7rem 0 0;font-family:var(--wide);font-stretch:125%;font-weight:300;font-size:clamp(1.8rem,3.6vw,3.1rem);letter-spacing:.06em;line-height:1.08;text-transform:uppercase}
+.sec .num{color:var(--red)}
+.sec .lede{margin:1.2rem 0 0;font-size:clamp(1.3rem,2vw,1.7rem);line-height:1.3;font-style:italic}
+.sec blockquote{margin:2.2rem 0 0;padding-left:1.2rem;border-left:1px solid var(--red);font-size:1.12rem;line-height:1.5;color:var(--mute);max-width:32rem}
+.sec cite{display:block;margin-top:.8rem;font-style:normal;font-family:var(--wide);font-stretch:125%;text-transform:uppercase;letter-spacing:.28em;font-size:.62rem;color:var(--dim)}
+.sec .body{margin:0 0 1.6rem;font-size:1.2rem;line-height:1.55;color:#c9cfd4;max-width:34rem}
+.roll{list-style:none;margin:0;padding:0}
+.roll li{padding:1rem 0;border-bottom:1px solid rgba(232,235,237,.14);font-family:var(--wide);font-stretch:112%;font-size:1rem;letter-spacing:.04em}
+.roll li:first-child{border-top:1px solid rgba(232,235,237,.14)}
+.price{display:flex;align-items:baseline;gap:1.2rem;flex-wrap:wrap;margin:0 0 2rem;font-family:var(--wide);font-stretch:125%;font-weight:300}
+.price strong{font-weight:300;font-size:clamp(2.6rem,6vw,4.4rem);letter-spacing:.02em}
+.price span{font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
+.btn{display:inline-flex;align-items:center;gap:1rem;padding:1.05rem 1.6rem;border:1px solid var(--paper);color:var(--paper);text-decoration:none;font-family:var(--wide);font-stretch:125%;text-transform:uppercase;letter-spacing:.28em;font-size:.72rem;transition:background .3s,color .3s,border-color .3s}
+.btn:hover{background:var(--paper);color:var(--ink)}
+.btn.red{background:var(--red);border-color:var(--red)}
+.btn.red:hover{background:var(--paper);border-color:var(--paper);color:var(--ink)}
+.btn svg{width:18px;height:10px}
+.people .face{display:block;width:100%;max-width:26rem;height:auto;aspect-ratio:4/5;object-fit:cover;object-position:50% 20%;margin:0 0 1.8rem;filter:grayscale(1) contrast(1.08) brightness(.92);background:#15181b}
+.people h3{margin:0;font-family:var(--wide);font-stretch:125%;font-weight:300;font-size:1.7rem;letter-spacing:.06em;text-transform:uppercase}
+.people .role{margin:.5rem 0 1rem;color:var(--red)}
+.people p.bio{margin:0;font-size:1.15rem;line-height:1.5;color:#c9cfd4;max-width:26rem}
+.next{text-align:center;min-height:calc(100svh - 14rem);display:flex;flex-direction:column;justify-content:center;align-items:center}
+/* a quick dip to black when a menu link jumps a long way, so the film never whips past */
+.curtain{position:fixed;inset:0;z-index:15;background:var(--ink);opacity:0;pointer-events:none;transition:opacity .3s ease}
+.curtain.on{opacity:1}
+.next p{margin:1.4rem auto 2.4rem;font-size:1.3rem;line-height:1.5;color:#c9cfd4;max-width:36rem}
+.next .mail{display:block;margin-top:1.6rem;color:var(--mute);font-size:1.05rem}
+footer{position:relative;z-index:2;background:var(--ink);border-top:1px solid rgba(232,235,237,.12);padding:3rem clamp(1.2rem,6vw,5rem) 4rem;text-align:center;color:var(--dim);font-size:.88rem;line-height:1.6}
+footer p{margin:.3rem 0}
+footer .mark{display:inline-block;margin-bottom:1.2rem;color:var(--paper);text-decoration:none}
+.rv{opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform .9s ease}
+.rv.in{opacity:1;transform:none}
+@media (max-width:860px){.cols{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}}
+
+@media (max-width:1000px){
+  .board.left > div,.board.right > div{transform:translate(-50%,-50%);text-align:center}
+}
+@media (max-width:700px){
+  .board h1{font-size:2.15rem}
+  .board h2{font-size:1.7rem}
+  .board p{font-size:1.1rem}
+  .board .line{font-size:1.6rem}
+  .board{width:78vw}
+}
+@media (prefers-reduced-motion:reduce){
+  .drive{height:auto}
+  .stage{position:relative;height:auto;min-height:100svh;padding:8rem 1.5rem 6rem;display:grid;gap:4rem}
+  .board,.board > div,.board.left > div,.board.right > div{position:relative;left:auto;top:auto;transform:none!important;opacity:1!important;width:auto;text-align:left}
+  .hud,.hint,.blur{display:none}
+}
+</style>
+</head>
+<body>
+<div style="background:#17201B;color:#fff;font:500 14px/1.4 system-ui,sans-serif;padding:9px 20px;position:relative;display:flex;flex-wrap:wrap;gap:6px 18px;align-items:center;z-index:2147483000"><span style="display:inline-flex;align-items:center;gap:8px"><svg style="height:12px;width:auto;color:#fff" viewBox="0 0 487.5 208.5" role="img" aria-label="Pete Owen Design logo"><path fill="currentColor" d="M487.5,10.6h-41.2v15.5c-15.3-10.6-33.9-16.8-53.8-16.8-30.1,0-57,14.1-74.4,36-17.4-21.9-44.3-36-74.4-36s-57,14.1-74.4,36c-17.4-21.9-44.3-36-74.4-36C44.8,9.4,3.8,48,0,96.9h-.3v100.3h41.2v-14.5c15.3,10.6,33.9,16.8,53.8,16.8,30.1,0,57-14.1,74.4-36,17.4,21.9,44.3,36,74.4,36s57-14.1,74.4-36c17.4,21.9,44.3,36,74.4,36,52.4,0,95.1-42.6,95.1-95.1s0-1.3,0-1.9h0V10.6h0ZM94.6,158.2c-29.7,0-53.8-24.2-53.8-53.8s24.2-53.8,53.8-53.8,53.8,24.2,53.8,53.8-24.2,53.8-53.8,53.8ZM243.5,158.2c-29.7,0-53.8-24.2-53.8-53.8s24.2-53.8,53.8-53.8,53.8,24.2,53.8,53.8-24.2,53.8-53.8,53.8ZM392.4,158.2c-29.7,0-53.8-24.2-53.8-53.8s24.2-53.8,53.8-53.8,53.8,24.2,53.8,53.8-24.2,53.8-53.8,53.8Z"/></svg> Design idea by Pete Owen Design. Not the live Veloce Driving website.</span><a href="../index.html" style="color:#fff;font-weight:700">Back to the start</a></div>
+
+<div class="curtain" aria-hidden="true"></div>
+<header class="top">
+  <a class="mark" href="#">VELOCE</a>
+  <a class="cap" href="#where">Book a session</a>
+</header>
+
+<section class="drive" id="drive" aria-label="Veloce Driving">
+  <div class="stage">
+    <!-- Two films: landscape for wide screens, portrait for tall ones. The script picks one and scrubs it with the scroll. -->
+    <video class="road" data-portrait="files/drive-portrait.mp4" data-portrait-poster="files/drive-portrait-poster.jpg" data-landscape="files/drive-landscape.mp4" data-landscape-poster="files/drive-landscape-poster.jpg" muted playsinline preload="auto" disablepictureinpicture aria-hidden="true"></video>
+    <img class="blur" src="files/drive-portrait-poster.jpg" alt="" aria-hidden="true" hidden>
+    <div class="shade"></div>
+
+    <div class="board" data-z="0"><div>
+      <h1>VELOCE<span>Driving</span></h1>
+    </div></div>
+
+    <div class="board" data-z="1"><div>
+      <p class="line">Understand what the car is doing.<br>Understand what you are doing to it.</p>
+    </div></div>
+
+    <div class="board left" data-z="2" data-x="-1"><div>
+      <span class="cap num">Chapter I</span>
+      <h2>Driver Development</h2>
+      <p>Know why the car moves before you ask it to.</p>
+    </div></div>
+
+    <div class="board right" data-z="3" data-x="1"><div>
+      <span class="cap num">Chapter II</span>
+      <h2>Motorsport Management</h2>
+      <p>One programme. One direction.</p>
+    </div></div>
+
+    <div class="board left" data-z="4" data-x="-1"><div>
+      <span class="cap num">Chapter III</span>
+      <h2>Private Office</h2>
+      <p>Personal. Discreet. Independent.</p>
+    </div></div>
+
+    <div class="flash"></div>
+    <p class="hint cap">Scroll to drive</p>
+    <div class="hud cap" aria-hidden="true"><span>Start</span><div class="track"><i></i></div><b>0 m</b></div>
+  </div>
+</section>
+
+<main>
+<div class="wrap">
+
+  <section class="sec" id="driver"><div class="cols">
+    <div class="rv">
+      <span class="cap num">Chapter I</span>
+      <h2>Driver Development</h2>
+      <p class="lede">Know why the car moves before you ask it to.</p>
+      <blockquote>“Now I look forward to driving with excitement instead of anxiety.”<cite>Emma R, international client</cite></blockquote>
+    </div>
+    <div class="rv">
+      <p class="body">Coaching on road, on track and at UTAC Millbrook, built on understanding why the car behaves as it does, not only what to do.</p>
+      <ul class="roll">
+        <li>Car control and vehicle dynamics</li>
+        <li>Advanced road driver development</li>
+        <li>Track day coaching</li>
+        <li>Bespoke multi-stage programmes</li>
+      </ul>
+    </div>
+  </div></section>
+
+  <section class="sec" id="management"><div class="cols">
+    <div class="rv">
+      <span class="cap num">Chapter II</span>
+      <h2>Motorsport Management</h2>
+      <p class="lede">One programme. One direction.</p>
+      <blockquote>“Working with them is one of the best decisions we’ve made.”<cite>Becky and Simon C, racing parents</cite></blockquote>
+    </div>
+    <ul class="roll rv">
+      <li>Career and pathway strategy</li>
+      <li>Team and championship selection</li>
+      <li>Contracts, budgets and testing</li>
+      <li>Race operations</li>
+      <li>Sponsorship and partnership development</li>
+    </ul>
+  </div></section>
+
+  <section class="sec" id="office"><div class="cols">
+    <div class="rv">
+      <span class="cap num">Chapter III</span>
+      <h2>Private Office</h2>
+      <p class="lede">Personal. Discreet. Independent.</p>
+      <blockquote>“Kat and the Veloce Driving team helped me source the perfect car that met all my requirements.”<cite>David K, international client</cite></blockquote>
+    </div>
+    <div class="rv">
+      <p class="body">One experienced point of contact for the cars in your life, with no dealer or broker commission behind the advice.</p>
+      <ul class="roll">
+        <li>Vehicle sourcing and acquisition</li>
+        <li>Servicing, storage and transport</li>
+        <li>Sales advisory and specialist projects</li>
+        <li>Private driver development</li>
+      </ul>
+    </div>
+  </div></section>
+
+  <section class="sec" id="millbrook"><div class="cols">
+    <div class="rv">
+      <span class="cap num">UTAC Millbrook, Bedfordshire</span>
+      <h2>One day.<br>One car. One coach.</h2>
+    </div>
+    <div class="rv">
+      <p class="body">The Millbrook Course is one-to-one coaching at the proving ground, and the one thing you can book straight away.</p>
+      <div class="price"><strong>£1,500</strong><span>or a £375 deposit to hold your date</span></div>
+      <a class="btn" href="mailto:enquiries@velocedriving.com?subject=UTAC%20Millbrook%20Course">Ask about a date <svg viewBox="0 0 18 10" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M0 5h17M13 1l4 4-4 4"/></svg></a>
+    </div>
+  </div></section>
+
+  <section class="sec people" id="founders">
+    <div class="rv" style="margin-bottom:clamp(2rem,5vw,4rem)"><span class="cap num">The founders</span><h2>Kat and Richard</h2></div>
+    <div class="cols">
+    <div class="rv">
+      <img class="face" src="https://velocedriving.com/wp-content/uploads/2024/10/Kat-Impey-profile.png" alt="Kat Impey" loading="lazy" width="600" height="600">
+      <h3>Kat Impey</h3>
+      <p class="cap role">Co-founder</p>
+      <p class="bio">Coaching since 2004. Raced from professional karting to Formula Three.</p>
+    </div>
+    <div class="rv">
+      <img class="face" src="https://velocedriving.com/wp-content/uploads/2024/10/Richard-Bott-profile.png" alt="Richard Bott" loading="lazy" width="600" height="600">
+      <h3>Richard Bott</h3>
+      <p class="cap role">Co-founder</p>
+      <p class="bio">Racing since 1992. Has worked in driver management, supporting drivers in BTCC, Formula 3 and IndyCar.</p>
+    </div>
+    </div></section>
+
+  <section class="sec next" id="where">
+    <h2 class="rv">Where next?</h2>
+    <p class="rv">A first lesson, a first season, or the next car. Tell us where you want to go and we will help you decide the route.</p>
+    <a class="btn red rv" href="mailto:enquiries@velocedriving.com">Start the conversation <svg viewBox="0 0 18 10" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M0 5h17M13 1l4 4-4 4"/></svg></a>
+    <a class="mail rv" href="mailto:enquiries@velocedriving.com">enquiries@velocedriving.com</a>
+  </section>
+
+</div>
+</main>
+
+<footer>
+  <a class="mark" href="#">VELOCE</a>
+  <p>Concept design by Pete Owen Design. Not the live Veloce Driving website.</p>
+  <p>The film is a stand-in made from a reference photograph, to be replaced. The two portraits are Veloce Driving’s own.</p>
+  <p>Services, prices, founders’ histories, reviews and the email address are from velocedriving.com. Headlines and short lines are proposed copy.</p>
+  <p class="cap">Direction M · Drive In</p>
+</footer>
+
+<script>
+(function(){
+  // if a strip sits above the page (the sent copy has one), start the top bar below it
+  var topbar = document.querySelector(".top"), above = document.querySelector(".curtain").previousElementSibling;
+  if (above) {
+    var place = function(){ topbar.style.top = Math.max(0, above.offsetHeight - scrollY) + "px"; };
+    addEventListener("scroll", place, { passive: true }); addEventListener("resize", place); place();
+  }
+
+  // menu links: dip to black, jump, come back up
+  var curtain = document.querySelector(".curtain");
+  var still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  [].forEach.call(document.querySelectorAll('a[href^="#"]'), function(a){
+    a.addEventListener("click", function(e){
+      var id = a.getAttribute("href").slice(1);
+      var to = id ? document.getElementById(id) : null;
+      e.preventDefault();
+      var go = function(){
+        window.veloceSnap = true;
+        if (to) to.scrollIntoView(); else scrollTo(0, 0);
+      };
+      if (still) { go(); return; }
+      curtain.classList.add("on");
+      setTimeout(function(){ go(); setTimeout(function(){ curtain.classList.remove("on"); }, 120); }, 320);
+    });
+  });
+
+  var rv = [].slice.call(document.querySelectorAll(".rv"));
+  if (!("IntersectionObserver" in window)) { rv.forEach(function(el){ el.classList.add("in"); }); return; }
+  var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if (e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); } }); }, { rootMargin: "0px 0px -8% 0px" });
+  rv.forEach(function(el){ io.observe(el); });
+})();
+</script>
+<script>
+(function(){
+  var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var film = document.querySelector("video.road");
+  var wide = function(){ return innerWidth > innerHeight; };
+  var base = function(){ return wide() ? "data-landscape" : "data-portrait"; };
+  var using = base();
+  film.poster = film.getAttribute(using + "-poster");
+  if (reduce) return;
+
+  var drive = document.getElementById("drive");
+  var road = drive.querySelector(".road");
+  var blur = drive.querySelector(".blur");
+  var flash = drive.querySelector(".flash");
+  var hint = drive.querySelector(".hint");
+  var bar = drive.querySelector(".hud i");
+  var dist = drive.querySelector(".hud b");
+  var boards = [].slice.call(drive.querySelectorAll(".board"));
+  var isVideo = road.tagName === "VIDEO";
+
+  var COUNT = 5;          // boards along the straight
+  var LENGTH = 800;       // metres shown on the readout
+  var last = 0, lastY = scrollY, speed = 0, target = 0, cur = 0, shown = -1;
+  if (isVideo) {
+    // phones only let a film be scrubbed once it has been started, so start and stop it straight away
+    var prime = function(){ var q = road.play(); if (q && q.then) q.then(function(){ road.pause(); }).catch(function(){}); };
+    addEventListener("touchstart", prime, { once: true, passive: true });
+    // fetch the whole film into memory first, so every frame is to hand and any server will do
+    var loadFilm = function(){
+      var want = using;
+      fetch(road.getAttribute(want)).then(function(r){ return r.blob(); }).then(function(b){
+        if (want !== using) return;            // the screen was turned while it loaded
+        road.src = URL.createObjectURL(b); shown = -1; road.load(); prime();
+      }).catch(function(){});
+    };
+    loadFilm();
+    // turning a phone or reshaping the window swaps to the film that fits
+    addEventListener("resize", function(){
+      var b = base();
+      if (b !== using) { using = b; road.poster = road.getAttribute(b + "-poster"); loadFilm(); }
+    });
+  }
+
+  function progress(){
+    var r = drive.getBoundingClientRect();
+    var run = drive.offsetHeight - innerHeight;
+    return Math.min(1, Math.max(0, -r.top / run));
+  }
+
+  function frame(){
+    // ease towards the scroll position so it feels like momentum, not a jolt
+    target = progress();
+    if (window.veloceSnap) { cur = target; window.veloceSnap = false; }
+    cur += (target - cur) * 0.12;
+    if (Math.abs(target - cur) < 0.0002) cur = target;
+
+    var y = scrollY;
+    speed += (Math.min(1, Math.abs(y - lastY) / 60) - speed) * 0.15;
+    lastY = y;
+
+    var p = cur;
+    // the photograph: zoom towards the vanishing point; a film would be scrubbed instead
+    if (isVideo) {
+      if (road.duration) {
+        var t = p * (road.duration - 0.05);
+        if (Math.abs(t - shown) > 0.02 && !road.seeking) { road.currentTime = t; shown = t; }
+      }
+    } else {
+      var s = 1 / (1 - 0.72 * p);           // gets faster the further in, like perspective
+      road.style.transform = "scale(" + s.toFixed(4) + ")";
+      blur.style.transform = "scale(" + (s * 1.04).toFixed(4) + ")";
+    }
+    if (!isVideo) blur.style.opacity = (speed * 0.9).toFixed(3);
+
+    // the boards: each sits at a distance down the track; the camera moves through them
+    var cam = p * (COUNT + 0.6) - 0.35;       // in "board" units
+    var narrow = innerWidth < 700;
+    boards.forEach(function(b){
+      var z = +b.dataset.z - cam;               // distance ahead of us
+      var side = innerWidth <= 1000 ? 0 : +(b.dataset.x || 0);
+      if (z < -0.12 || z > 1.35) { b.style.opacity = 0; b.style.visibility = "hidden"; return; }
+      b.style.visibility = "visible";
+      var sc = Math.min(1 / (0.25 + Math.max(z, -0.12) * 1.6), 7);  // closer means bigger
+      var off = side * (narrow ? 3 : 9) * sc;         // side boards drift outward as they near
+      var lift = (narrow ? -1 : 2) * sc;              // and drop slightly, like a sign at the roadside
+      var o = z > 0.9 ? (1.35 - z) / 0.45 : z < 0.14 ? (z + 0.12) / 0.26 : 1;
+      if (side && z < 0.42) o = Math.min(o, (z - 0.16) / 0.26);   // side boards slip away before they get cut off by the edge
+      b.style.opacity = Math.max(0, Math.min(1, o)).toFixed(3);
+      b.style.transform = "translate(" + off.toFixed(1) + "vw," + lift.toFixed(1) + "vh) scale(" + sc.toFixed(4) + ")";
+    });
+
+    flash.style.opacity = Math.max(0, (p - 0.9) / 0.1).toFixed(3);
+    hint.style.opacity = p > 0.02 ? 0 : 1;
+    bar.style.width = (p * 100).toFixed(2) + "%";
+    dist.textContent = Math.round(p * LENGTH) + " m";
+
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
